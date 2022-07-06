@@ -16,7 +16,7 @@ docker run -d --restart always --network host wikihostinc/looking-glass-server
 | PUBLIC_IPV4  | 1.1.1.1 | (fetch from http://ifconfig.co) | The IPv4 address of the server |
 | PUBLIC_IPV6  | fe80::1 | (fetch from http://ifconfig.co) | The IPv6 address of the server|
 | DISPLAY_TRAFFIC | true | true | Toggle the streaming traffic graph |
-| ENABLE_SPEEDTEST |  true | true | Toggle the streaming traffic graph |
+| ENABLE_SPEEDTEST |  true | true | Toggle the speedtest feature |
 | UTILITIES_PING | true | true | Toggle the ping feature |
 | UTILITIES_TRACEROUTE | true | true | Toggle the traceroute feature |
 | UTILITIES_IPERF3 | true | true | Toggle the iperf3 feature |
