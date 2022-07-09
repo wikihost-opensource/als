@@ -3,7 +3,11 @@ if (!function_exists('env')) {
     function env($key, $default = false)
     {
         $result = getenv($key);
-        if ($result !== false) return $result;
+        if ($result !== false) {
+            if ($result === "true") return true;
+            if ($result === "false") return false;
+            return $result;
+        }
         return $default;
     }
 }

@@ -31,6 +31,7 @@ export default defineComponent({
   },
   methods: {
     initWebsocket() {
+      if (this.isLoaded) return;
       this.ws = new WebSocket(location.protocol.replace('http', 'ws') + '//' + location.host + '/ws')
       this.ws.onopen = () => {
         this.isLoaded = true
