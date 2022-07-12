@@ -31,26 +31,27 @@ export default defineComponent({
   },
   methods: {
     initWebsocket() {
-      if (this.isLoaded) return;
+      if (this.isLoaded || this.isConnecting) return;
+      this.isConnecting = true
       this.ws = new WebSocket(location.protocol.replace('http', 'ws') + '//' + location.host + '/ws')
       this.ws.onopen = () => {
         this.isLoaded = true
+        this.isConnecting = false
       }
       this.ws.onmessage = (message) => {
         this.wsMessage.push(message.data.split('|'))
       };
-      this.ws.onclose = () => {
+
+      let error_or_closed = () => {
         this.isLoaded = false
-        setTimeout(() => {
-          this.initWebsocket()
-        }, 1000)
+        this.isConnecting = false
+        this.ws.close()
+        this.ws = null
+        this.initWebsocket()
       }
-      this.ws.onerror = () => {
-        this.isLoaded = false
-        setTimeout(() => {
-          this.initWebsocket()
-        }, 1000)
-      }
+
+      this.ws.onclose = error_or_closed
+      this.ws.onerror = error_or_closed
     }
   },
   data() {
@@ -58,6 +59,7 @@ export default defineComponent({
       ws: false,
       wsMessage: reactive([]),
       isLoaded: false,
+      isConnecting: false,
       componentConfig: reactive({})
     }
   },
