@@ -2,7 +2,7 @@
 
 ## Quick start
 ```
-docker run -d --restart always --network host wikihostinc/looking-glass-server
+docker run -d --name looking-glass --restart always --network host wikihostinc/looking-glass-server
 ```
 
 ## Host Requirements
@@ -34,6 +34,9 @@ docker run -d --restart always --network host wikihostinc/looking-glass-server
 ## TO-DO List
 - [ ] Traceroute - IPv6
 - [ ] Ping - IPv6
+
+## Thanks to
+https://github.com/librespeed/speedtest
 
 ## License
 
