@@ -3,3 +3,11 @@
 **/.DS_Store
 **/node_modules
 **/package-lock.json
+ui/public/speedtest_worker.js
+backend/app/webspaces/speedtest-static/*
+modules/speedtest/*
+!modules/speedtest/speedtest_worker.js
+backend/app/webspaces/speedtest_worker.js
+backend/app/webspaces/assets
+backend/app/webspaces/index.html
+backend/app/webspaces/favicon.ico

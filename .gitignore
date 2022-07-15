@@ -1,1 +1,2 @@
 backend/app/webspaces/speedtest-static/*
+ui/public/speedtest_worker.js

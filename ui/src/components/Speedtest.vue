@@ -30,7 +30,7 @@
                 <h3>上行: {{ h5Upload }}</h3> -->
                 <n-button size="large" @click="startOrStopSpeedtest" style="margin-top: 10px;">
                     <n-spin size="small" v-show="h5SpeedWorker !== null" style="margin-right: 10px;" /> {{
-                            h5SpeedtestButtonText
+                    h5SpeedtestButtonText
                     }}
                 </n-button>
             </n-card>
@@ -72,7 +72,7 @@ export default defineComponent({
             this.h5Upload = '...'
             this.h5Download = '...'
             this.h5SpeedtestButtonText = '停止测速'
-            this.h5SpeedWorker = new Worker('speedtest_worker.min.js')
+            this.h5SpeedWorker = new Worker('speedtest_worker.js')
             // this
             this.h5SpeedWorker.onmessage = (e) => {
                 var nowPointName = (new Date()).getHours().toString().padStart(2, '0') + ':' +

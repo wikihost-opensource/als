@@ -1,5 +1,6 @@
 FROM node:lts-alpine
 ADD ui /app
+ADD modules/speedtest/speedtest_worker.js /app/public/speedtest_worker.js
 WORKDIR /app
 RUN npm i && \
     npm run build
