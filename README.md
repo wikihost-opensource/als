@@ -1,3 +1,5 @@
+[![docker image build](https://github.com/wikihost-opensource/als/actions/workflows/docker-image.yml/badge.svg)](https://github.com/wikihost-opensource/als/actions/workflows/docker-image.yml)
+
 # ALS - Another Looking-glass Server
 
 ## Quick start
