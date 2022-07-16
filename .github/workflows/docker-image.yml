@@ -12,6 +12,8 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v3
+      - name: Checkout submodules
+        run: git submodule update --init --recursive        
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
