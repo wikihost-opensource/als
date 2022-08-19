@@ -20,7 +20,7 @@ class Websocket
         $this->request = $request;
         
         $this->clientIp = $this->request->header['x-real-ip'];
-        $localConfig['client_ip'] = $this->clientIp
+        $localConfig['client_ip'] = $this->clientIp;
 
         $this->response = $response;
         $this->fd = $fd;
