@@ -11,6 +11,9 @@
                 <div v-show="publicIpv6">
                     公网 IPv6 地址: <n-tag> [{{ publicIpv6 }}]</n-tag>
                 </div>
+                <div v-show="clientIp">
+                    您当前的 IP 地址: <n-tag>{{ clientIp }}</n-tag>
+                </div>                
             </n-space>
             <!-- <n-progress type=" line" :percentage="100" :show-indicator="false" processing /> -->
         </n-card>
@@ -28,6 +31,7 @@ export default defineComponent({
     data() {
         return {
             location: false,
+            clientIp: false,
             publicIpv4: false,
             publicIpv6: false,
         }
@@ -39,6 +43,7 @@ export default defineComponent({
                 let data = JSON.parse(e[1])
                 this.wsMessage.splice(i, 1)
                 this.location = data.location
+                this.clientIp = data.client_ip
                 this.publicIpv4 = data.public_ipv4
                 this.publicIpv6 = data.public_ipv6
                 this.componentConfig.public_ipv4 = data.public_ipv4
