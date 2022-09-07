@@ -5,6 +5,8 @@
 docker run -d --name looking-glass --restart always --network host wikihostinc/looking-glass-server
 ```
 
+[DEMO](http://lg.hk1-bgp.hkg.50network.com/)
+
 ## Host Requirements
  - Can run docker (yes, only docker is required)
 
