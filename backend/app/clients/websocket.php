@@ -15,8 +15,13 @@ class Websocket
     public function __construct($request, $response, $fd)
     {
         global $config;
+        $localConfig = $config;
+        
         $this->request = $request;
+        
         $this->clientIp = $this->request->header['x-real-ip'];
+        $localConfig['client_ip'] = $this->clientIp;
+
         $this->response = $response;
         $this->fd = $fd;
         $this->sendChannel = new \Swoole\Coroutine\Channel(100);
@@ -29,7 +34,7 @@ class Websocket
             }
         });
 
-        $this->send('1000|' . json_encode($config));
+        $this->send('1000|' . json_encode($localConfig));
     }
 
     /**
