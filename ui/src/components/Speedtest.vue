@@ -37,11 +37,13 @@
         </div>
         <div v-show="componentConfig?.testFiles?.length > 0" style="margin-bottom: 10px;">
             <n-card title="静态文件测速">
-                <div v-for="i in componentConfig.testFiles">
-                    <n-button text tag="a" :href="`speedtest-static/${i}.test`" target="_blank" type="primary">
-                        {{ i }}
-                    </n-button>
-                </div>
+                <n-space>
+                    <template v-for="i in componentConfig.testFiles">
+                        <n-button tag="a" :href="`speedtest-static/${i}.test`" target="_blank">
+                            {{ i }}
+                        </n-button>
+                    </template>
+                </n-space>
             </n-card>
         </div>
     </n-card>

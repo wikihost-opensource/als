@@ -10,6 +10,12 @@
         <Utilities v-model:componentConfig="componentConfig" v-model:ws="ws" v-model:wsMessage="wsMessage"></Utilities>
         <Speedtest v-model:componentConfig="componentConfig" v-show="componentConfig.display_speedtest"></Speedtest>
         <TrafficDisplay v-show="componentConfig.display_traffic" v-model:wsMessage="wsMessage"></TrafficDisplay>
+        <div>
+          Powered by
+          <n-button text tag="a" target="_blank" href="https://github.com/wikihost-opensource/als">
+            WIKIHOST Opensource - ALS (Github)
+          </n-button>
+        </div>
       </n-space>
     </div>
   </n-config-provider>
