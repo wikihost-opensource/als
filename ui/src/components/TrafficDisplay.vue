@@ -1,6 +1,9 @@
 <template>
     <div>
-        <n-card title="Server Traffic" hoverable>
+        <n-card hoverable>
+            <template #header>
+                服务器流量图
+            </template>
             <n-grid x-gap="12" cols="1 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen">
                 <n-gi v-for="(interfaceData, interfaceName) in interfaces">
                     <n-card :title="interfaceName">

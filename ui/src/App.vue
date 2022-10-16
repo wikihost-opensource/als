@@ -2,22 +2,25 @@
 
 <template>
   <n-config-provider :theme="darkTheme">
-    <Loading v-show="!isLoaded"></Loading>
-    <div v-show="isLoaded">
-      <n-space vertical>
-        <h2>Looking Glass Server</h2>
-        <Information v-model:wsMessage="wsMessage" v-model:componentConfig="componentConfig"></Information>
-        <Utilities v-model:componentConfig="componentConfig" v-model:ws="ws" v-model:wsMessage="wsMessage"></Utilities>
-        <Speedtest v-model:componentConfig="componentConfig" v-show="componentConfig.display_speedtest"></Speedtest>
-        <TrafficDisplay v-show="componentConfig.display_traffic" v-model:wsMessage="wsMessage"></TrafficDisplay>
-        <div>
-          Powered by
-          <n-button text tag="a" target="_blank" href="https://github.com/wikihost-opensource/als">
-            WIKIHOST Opensource - ALS (Github)
-          </n-button>
-        </div>
-      </n-space>
-    </div>
+    <n-message-provider>
+      <Loading v-show="!isLoaded"></Loading>
+      <div v-show="isLoaded">
+        <n-space vertical>
+          <h2>Looking Glass Server</h2>
+          <Information v-model:wsMessage="wsMessage" v-model:componentConfig="componentConfig"></Information>
+          <Utilities v-model:componentConfig="componentConfig" v-model:ws="ws" v-model:wsMessage="wsMessage">
+          </Utilities>
+          <Speedtest v-model:componentConfig="componentConfig" v-show="componentConfig.display_speedtest"></Speedtest>
+          <TrafficDisplay v-show="componentConfig.display_traffic" v-model:wsMessage="wsMessage"></TrafficDisplay>
+          <div>
+            Powered by
+            <n-button text tag="a" target="_blank" href="https://github.com/wikihost-opensource/als">
+              WIKIHOST Opensource - ALS (Github)
+            </n-button>
+          </div>
+        </n-space>
+      </div>
+    </n-message-provider>
   </n-config-provider>
 </template>
 <script>

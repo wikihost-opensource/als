@@ -1,5 +1,8 @@
 <template>
-    <n-card title="Network Utilities">
+    <n-card>
+        <template #header>
+            网络工具
+        </template>
         <n-space>
             <n-button @click="activate('ping')">Ping</n-button>
             <n-button @click="activate('traceroute')">Traceroute</n-button>

@@ -25,6 +25,7 @@
     "prettier": "^2.5.1",
     "unplugin-vue-components": "^0.19.6",
     "vfonts": "^0.0.3",
-    "vite": "^2.9.9"
+    "vite": "^2.9.9",
+    "vue-clipboard3": "^2.0.0"
   }
 }
