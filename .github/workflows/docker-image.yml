@@ -1,9 +1,7 @@
 name: 'docker image build'
 
 on:
-  label:
-    types:
-      - created
+  create
 
 jobs:
   docker:
