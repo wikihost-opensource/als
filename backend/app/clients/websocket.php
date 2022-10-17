@@ -27,7 +27,7 @@ class Websocket
         $this->sendChannel = new \Swoole\Coroutine\Channel(100);
         go(function () {
             while (true) {
-                $data = $this->sendChannel->pop(2.0);
+                $data = $this->sendChannel->pop(20);
                 if ($data === '' || $data === false || $data === []) break;
 
                 $this->response->push($data);
