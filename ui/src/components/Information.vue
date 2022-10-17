@@ -74,6 +74,9 @@ export default defineComponent({
                 this.componentConfig.testFiles = data.testfiles
                 this.componentConfig.display_traffic = data.display_traffic
                 this.componentConfig.display_speedtest = data.display_speedtest
+                this.componentConfig.utilities_ping = data.utilities_ping
+                this.componentConfig.utilities_traceroute = data.utilities_traceroute
+                this.componentConfig.utilities_iperf3 = data.utilities_iperf3
 
                 this.tableData = []
                 this.tableData.push({

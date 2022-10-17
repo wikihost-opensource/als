@@ -1,12 +1,13 @@
 <template>
+    <div>
     <n-card>
         <template #header>
             网络工具
         </template>
         <n-space>
-            <n-button @click="activate('ping')">Ping</n-button>
-            <n-button @click="activate('traceroute')">Traceroute</n-button>
-            <n-button @click="activate('iperf3')">iPerf3</n-button>
+            <n-button v-show="componentConfig.utilities_ping" @click="activate('ping')">Ping</n-button>
+            <n-button v-show="componentConfig.utilities_traceroute" @click="activate('traceroute')">Traceroute</n-button>
+            <n-button v-show="componentConfig.utilities_iperf3" @click="activate('iperf3')">iPerf3</n-button>
         </n-space>
     </n-card>
     <n-drawer v-model:show="componentSwitch.ping" :native-scrollbar="true" :width="drawWidth" placement="right">
@@ -24,6 +25,7 @@
             <iperf3 v-model:ws="ws" v-model:wsMessage="wsMessage" v-model:componentConfig="componentConfig" />
         </n-drawer-content>
     </n-drawer>
+    </div>
 </template>
 
 <script>
