@@ -16,9 +16,9 @@ class Websocket
     {
         global $config;
         $localConfig = $config;
-        
+
         $this->request = $request;
-        
+
         $this->clientIp = $this->request->header['x-real-ip'];
         $localConfig['client_ip'] = $this->clientIp;
 
@@ -239,9 +239,9 @@ class Websocket
     public function startIperf3($ticket)
     {
         $timeout = 60;
-        $port = rand(env('utilities_iperf3_port_min', '30000'), env('utilities_iperf3_port_max', '31000'));
+        $port = rand(env('UTILITIES_IPERF3_PORT_MIN', '30000'), env('UTILITIES_IPERF3_PORT_MAX', '31000'));
         while (in_array($port, self::$ports)) {
-            $port = rand(env('utilities_iperf3_port_min', '30000'), env('utilities_iperf3_port_max', '31000'));
+            $port = rand(env('UTILITIES_IPERF3_PORT_MIN', '30000'), env('UTILITIES_IPERF3_PORT_MAX', '31000'));
             sleep(.1);
         }
         self::$ports[] = $port;
