@@ -37,9 +37,9 @@
             </n-button>
         </n-space>
         <n-divider v-show="componentConfig?.testFiles?.length > 0" dashed />
-        <n-space v-show="componentConfig?.testFiles?.length > 0" justify="space-evenly">
+        <n-space v-if="componentConfig?.testFiles?.length > 0" justify="space-evenly">
 
-            <div v-show="componentConfig.public_ipv4">
+            <div v-if="componentConfig.public_ipv4">
                 <h3 style="text-align: center;">IPv4 下载测试</h3>
                 <n-space>
                     <template v-for="i in componentConfig.testFiles">
@@ -51,7 +51,7 @@
                 </n-space>
             </div>
 
-            <div v-show="componentConfig.public_ipv6">
+            <div v-if="componentConfig.public_ipv6">
                 <h3 style="text-align: center;">IPv6 下载测试</h3>
                 <n-space>
                     <template v-for="i in componentConfig.testFiles">
