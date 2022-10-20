@@ -9,7 +9,7 @@
               <td>{{ data.key }}</td>
               <td>
                 <n-button text @click="copySomething(data.value)">{{
-                  data.value
+                data.value
                 }}</n-button>
               </td>
             </tr>
@@ -91,7 +91,7 @@ export default defineComponent({
             });
           }
 
-          if (data.public_ipv4) {
+          if (data.public_ipv6) {
             this.tableData.push({
               key: "IPv6 地址",
               value: data.public_ipv6,
