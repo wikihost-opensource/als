@@ -26,6 +26,7 @@
     "unplugin-vue-components": "^0.19.6",
     "vfonts": "^0.0.3",
     "vite": "^2.9.9",
-    "vue-clipboard3": "^2.0.0"
+    "vue-clipboard3": "^2.0.0",
+    "vue3-markdown-it": "^1.0.10"
   }
 }

@@ -9,28 +9,20 @@
               <td>{{ data.key }}</td>
               <td>
                 <n-button text @click="copySomething(data.value)">{{
-                  data.value
+                data.value
                 }}</n-button>
               </td>
             </tr>
           </template>
         </tbody>
       </n-table>
-      <!-- <n-space vertical>
-                <div v-show="location">
-                    服务器地点: {{ location }}
-                </div>
-                <div v-show="publicIpv4">
-                    公网 IPv4 地址: {{ publicIpv4 }}
-                </div>
-                <div v-show="publicIpv6">
-                    公网 IPv6 地址: [{{ publicIpv6 }}]
-                </div>
-                <div v-show="clientIp">
-                    您当前的 IP 地址: {{ clientIp }}
-                </div>
-            </n-space> -->
-      <!-- <n-progress type=" line" :percentage="100" :show-indicator="false" processing /> -->
+    </n-card>
+
+    <n-card v-if="sponsorMessage.length > 0" hoverable style="margin-top: 10px;">
+      <template #header> 节点赞助商消息 </template>
+      <div>
+        <Markdown :source="sponsorMessage" />
+      </div>
     </n-card>
   </div>
 </template>
@@ -39,10 +31,14 @@
 import { defineComponent } from "vue";
 import useClipboard from "vue-clipboard3";
 import { useMessage } from "naive-ui";
+import Markdown from 'vue3-markdown-it';
 
 const { toClipboard } = useClipboard();
 
 export default defineComponent({
+  components: {
+    Markdown
+  },
   props: {
     wsMessage: Array,
     componentConfig: Object,
@@ -50,6 +46,7 @@ export default defineComponent({
   data() {
     return {
       tableData: [],
+      sponsorMessage: ''
     };
   },
   methods: {
@@ -91,7 +88,7 @@ export default defineComponent({
             });
           }
 
-          if (data.public_ipv4) {
+          if (data.public_ipv6) {
             this.tableData.push({
               key: "IPv6 地址",
               value: data.public_ipv6,
@@ -102,6 +99,10 @@ export default defineComponent({
             key: "您当前的 IP 地址",
             value: data.client_ip,
           });
+
+          if (data.sponsor_message.length > 0) {
+            this.sponsorMessage = data.sponsor_message;
+          }
           DataWatcher();
         });
       },

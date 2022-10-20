@@ -1,6 +1,6 @@
 <?php
 $config = [
-    'testfiles' => explode(" ", env('SPEEDTEST_FILE_LIST', '1MB 10MB 100MB 1GB')),
+    'testfiles' => explode(" ", trim(env('SPEEDTEST_FILE_LIST', '1MB 10MB 100MB 1GB'))),
     'public_ipv4' => env('PUBLIC_IPV4'),
     'public_ipv6' => env('PUBLIC_IPV6'),
     'location' => env('LOCATION', 'Unset'),
@@ -12,7 +12,23 @@ $config = [
     'utilities_iperf3' => env('UTILITIES_IPERF3', true),
     'utilities_iperf3_port_min' => env('UTILITIES_IPERF3_PORT_MIN', '30000'),
     'utilities_iperf3_port_max' => env('UTILITIES_IPERF3_PORT_MAX', '31000'),
+
+    // 赞助商信息
+    'sponsor_message' => '',
 ];
+
+// 空的字符串分割出来也会有一个空元素, 判断出来然后置空
+if (trim($config['testfiles'][0]) === '') $config['testfiles'] = [];
+
+$sponsor_message = env('SPONSOR_MESSAGE', '');
+/**
+ * 如果文件存在则读取文件的内容, 不存在就直接当内容实用
+ */
+if (file_exists($sponsor_message)) {
+    applog('INFO: Reading sponsor message from file: ' . $sponsor_message);
+    $sponsor_message = file_get_contents($sponsor_message);
+}
+$config['sponsor_message'] = $sponsor_message;
 
 go(function () {
     global $config;
