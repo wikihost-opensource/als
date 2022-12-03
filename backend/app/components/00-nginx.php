@@ -13,6 +13,7 @@ if ($hostname) {
 $config = file_get_contents($basicConfPath);
 
 $config = str_replace('%HTTP_PORT%', env('HTTP_PORT', 80), $config);
+$config = str_replace('%LISTEN_IP%', env('LISTEN_IP', '0.0.0.0'), $config);
 
 @mkdir('/etc/nginx/snippets');
 foreach (glob(__DIR__ . '/../config/nginx/snippets/*') as $file) {
