@@ -17,6 +17,7 @@ class Websocket
     public function __construct($request, $response, $fd)
     {
         global $config;
+        global $trafficCache;
         $localConfig = $config;
 
         $this->request = $request;
@@ -37,6 +38,7 @@ class Websocket
         });
 
         $this->send(WebsocketCommandEnum::Config->value . '|' . json_encode($localConfig));
+        $this->send(WebsocketCommandEnum::InterfaceTraffic_10s->value . '|' . json_encode($trafficCache));
     }
 
     /**

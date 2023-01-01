@@ -21,11 +21,7 @@
                 </span>
               </n-gi>
               <n-gi span="2">
-                <apexchart
-                  type="line"
-                  :options="interfaceData.chartOptions"
-                  :series="interfaceData.series"
-                >
+                <apexchart type="line" :options="interfaceData.chartOptions" :series="interfaceData.series">
                 </apexchart>
               </n-gi>
             </n-grid>
@@ -57,13 +53,90 @@ export default defineComponent({
     };
   },
   methods: {
-    updateSeries() {
+    createGraph(interfaceName) {
+      this.interfaces[interfaceName] = {
+        traffic: {
+          receive: null,
+          send: null,
+        },
+        receive: 0,
+        send: 0,
+        lastReceive: 0,
+        lastSend: 0,
+        chartOptions: {
+          chart: {
+            id: "interface-" + interfaceName + "-chart",
+            foreColor: "#e8e8e8",
+            animations: {
+              enabled: true,
+              easing: "linear",
+              dynamicAnimation: {
+                speed: 1000,
+              },
+            },
+            zoom: {
+              enabled: false,
+            },
+            toolbar: {
+              show: false,
+            },
+            tooltip: {
+              theme: "dark",
+            },
+          },
+
+          xaxis: {
+            range: 10,
+            type: "category",
+            categories: [""],
+          },
+          yaxis: {
+            labels: {
+              formatter: (value) => {
+                return this.formatBytes(value, 2, true);
+              },
+            },
+          },
+          tooltip: {
+            x: {
+              format: "dd MMM yyyy",
+            },
+          },
+          dataLabels: {
+            enabled: false,
+          },
+          markers: {
+            size: 0,
+          },
+          stroke: {
+            curve: "smooth",
+          },
+        },
+        series: [
+          {
+            type: "line",
+            name: "Receive",
+            data: [],
+          },
+          {
+            type: "line",
+            name: "Send",
+            data: [],
+          },
+        ],
+      };
+      return;
+    },
+    updateSeries(date = null) {
+      if (date === null) {
+        date = new Date();
+      }
       var nowPointName =
-        new Date().getHours().toString().padStart(2, "0") +
+        date.getHours().toString().padStart(2, "0") +
         ":" +
-        new Date().getMinutes().toString().padStart(2, "0") +
+        date.getMinutes().toString().padStart(2, "0") +
         ":" +
-        new Date().getSeconds().toString().padStart(2, "0");
+        date.getSeconds().toString().padStart(2, "0");
       for (let interfaceName in this.interfaces) {
         let categories =
           this.interfaces[interfaceName].chartOptions.xaxis.categories;
@@ -86,6 +159,10 @@ export default defineComponent({
         sendDatas.push(send);
 
         categories.push(nowPointName);
+        receiveDatas = receiveDatas.slice(-20);
+        sendDatas = sendDatas.slice(-20);
+        categories = categories.slice(-20);
+
         this.interfaces[interfaceName].chartOptions.value = {
           xaxis: { categories: categories },
         };
@@ -121,6 +198,25 @@ export default defineComponent({
       }
       return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
     },
+    loadCache(data) {
+      data = JSON.parse(data[1]);
+      data.forEach((e, i) => {
+        let pointTime = new Date(parseInt(e.time.toString() + '000'))
+        // console.log(e.data)
+        for (let entry in e.data) {
+          let interfaceName = e.data[entry]['name']
+          if (!this.interfaces.hasOwnProperty(interfaceName)) {
+            this.createGraph(interfaceName)
+            this.interfaces[interfaceName].lastReceive = e.data[entry]['recv']
+            this.interfaces[interfaceName].lastSend = e.data[entry]['send']
+          }
+
+          this.interfaces[interfaceName].receive = e.data[entry]['recv'];
+          this.interfaces[interfaceName].send = e.data[entry]['send'];
+        }
+        this.updateSeries(pointTime)
+      })
+    }
   },
   mounted() {
     setInterval(() => {
@@ -130,84 +226,20 @@ export default defineComponent({
       () => this.wsMessage,
       () => {
         this.wsMessage.forEach((e, i) => {
+          if (e[0] == 101) {
+            this.loadCache(e);
+            this.wsMessage.splice(i, 1);
+            return;
+          }
           if (e[0] != 100) return false;
           let interfaceName = e[1];
           let receiveTraffic = e[2];
           let sendTraffic = e[3];
           this.wsMessage.splice(i, 1);
           if (!this.interfaces.hasOwnProperty(interfaceName)) {
-            this.interfaces[interfaceName] = {
-              traffic: {
-                receive: null,
-                send: null,
-              },
-              receive: receiveTraffic,
-              send: sendTraffic,
-              lastReceive: receiveTraffic,
-              lastSend: sendTraffic,
-              chartOptions: {
-                chart: {
-                  id: "interface-" + interfaceName + "-chart",
-                  foreColor: "#e8e8e8",
-                  animations: {
-                    enabled: true,
-                    easing: "linear",
-                    dynamicAnimation: {
-                      speed: 1000,
-                    },
-                  },
-                  zoom: {
-                    enabled: false,
-                  },
-                  toolbar: {
-                    show: false,
-                  },
-                  tooltip: {
-                    theme: "dark",
-                  },
-                },
-
-                xaxis: {
-                  range: 10,
-                  type: "category",
-                  categories: [""],
-                },
-                yaxis: {
-                  labels: {
-                    formatter: (value) => {
-                      return this.formatBytes(value, 2, true);
-                    },
-                  },
-                },
-                tooltip: {
-                  x: {
-                    format: "dd MMM yyyy",
-                  },
-                },
-                dataLabels: {
-                  enabled: false,
-                },
-                markers: {
-                  size: 0,
-                },
-                stroke: {
-                  curve: "smooth",
-                },
-              },
-              series: [
-                {
-                  type: "line",
-                  name: "Receive",
-                  data: [],
-                },
-                {
-                  type: "line",
-                  name: "Send",
-                  data: [],
-                },
-              ],
-            };
-            return;
+            this.createGraph(interfaceName)
+            this.interfaces[interfaceName].lastReceive = receiveTraffic
+            this.interfaces[interfaceName].lastSend = sendTraffic
           }
           this.interfaces[interfaceName].receive = receiveTraffic;
           this.interfaces[interfaceName].send = sendTraffic;

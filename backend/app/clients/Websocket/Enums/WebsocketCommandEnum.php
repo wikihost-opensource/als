@@ -19,6 +19,8 @@ enum WebsocketCommandEnum: int
      * base logic code
      */
     case End = 0;
+    case StreamInterfaceTraffic = 100;
+    case InterfaceTraffic_10s = 101;
     case Config = 1000;
 
     /**
