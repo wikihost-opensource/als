@@ -1,7 +1,5 @@
 <?php
 
-require __DIR__ . '/../clients/websocket.php';
-
 go(function () {
     $server = new Swoole\Coroutine\Http\Server('unix:///tmp/speedtest-api.sock');
     $server->handle('/', function (Swoole\Http\Request $request, Swoole\Http\Response $response) {
