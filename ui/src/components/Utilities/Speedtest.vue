@@ -33,12 +33,7 @@
         <a :href="speedtestData.result" target="_blank">
           <img
             :src="speedtestData.result + '.png'"
-            style="
-              max-width: 300px;
-              height: 100%;
-              display: flex;
-              margin: auto;
-            "
+            style="max-width: 300px; height: 100%; display: flex; margin: auto"
           />
         </a>
       </n-alert>
