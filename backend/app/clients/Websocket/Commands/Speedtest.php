@@ -29,7 +29,7 @@ class Speedtest extends Base
         'download' => false,
         'upload' => false,
     ];
-    private static $queues = [0, 0, 0, 0, 0, 0];
+    private static $queues = [];
     private $closed = false;
     // status management
     public $canStart = false;
@@ -66,15 +66,7 @@ class Speedtest extends Base
 
     private function join()
     {
-        self::$queues[] = 0;
-        self::$queues[] = 0;
-        self::$queues[] = 0;
-        self::$queues[] = 0;
-        self::$queues[] = 0;
-        self::$queues[] = 0;
-        self::$queues[] = 0;
         self::$queues[spl_object_id($this)] = $this;
-        self::$queues[] = 0;
         return $this;
     }
 
