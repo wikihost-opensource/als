@@ -21,7 +21,11 @@
                 </span>
               </n-gi>
               <n-gi span="2">
-                <apexchart type="area" :options="interfaceData.chartOptions" :series="interfaceData.series">
+                <apexchart
+                  type="area"
+                  :options="interfaceData.chartOptions"
+                  :series="interfaceData.series"
+                >
                 </apexchart>
               </n-gi>
             </n-grid>
@@ -75,8 +79,8 @@ export default defineComponent({
               },
               animateGradually: {
                 enabled: true,
-                delay: 300
-              }
+                delay: 300,
+              },
             },
             zoom: {
               enabled: false,
@@ -205,22 +209,22 @@ export default defineComponent({
     loadCache(data) {
       data = JSON.parse(data[1]);
       data.forEach((e, i) => {
-        let pointTime = new Date(parseInt(e.time.toString() + '000'))
+        let pointTime = new Date(parseInt(e.time.toString() + "000"));
         // console.log(e.data)
         for (let entry in e.data) {
-          let interfaceName = e.data[entry]['name']
+          let interfaceName = e.data[entry]["name"];
           if (!this.interfaces.hasOwnProperty(interfaceName)) {
-            this.createGraph(interfaceName)
-            this.interfaces[interfaceName].lastReceive = e.data[entry]['recv']
-            this.interfaces[interfaceName].lastSend = e.data[entry]['send']
+            this.createGraph(interfaceName);
+            this.interfaces[interfaceName].lastReceive = e.data[entry]["recv"];
+            this.interfaces[interfaceName].lastSend = e.data[entry]["send"];
           }
 
-          this.interfaces[interfaceName].receive = e.data[entry]['recv'];
-          this.interfaces[interfaceName].send = e.data[entry]['send'];
+          this.interfaces[interfaceName].receive = e.data[entry]["recv"];
+          this.interfaces[interfaceName].send = e.data[entry]["send"];
         }
-        this.updateSeries(pointTime)
-      })
-    }
+        this.updateSeries(pointTime);
+      });
+    },
   },
   mounted() {
     setInterval(() => {
@@ -241,9 +245,9 @@ export default defineComponent({
           let sendTraffic = e[3];
           this.wsMessage.splice(i, 1);
           if (!this.interfaces.hasOwnProperty(interfaceName)) {
-            this.createGraph(interfaceName)
-            this.interfaces[interfaceName].lastReceive = receiveTraffic
-            this.interfaces[interfaceName].lastSend = sendTraffic
+            this.createGraph(interfaceName);
+            this.interfaces[interfaceName].lastReceive = receiveTraffic;
+            this.interfaces[interfaceName].lastSend = sendTraffic;
           }
           this.interfaces[interfaceName].receive = receiveTraffic;
           this.interfaces[interfaceName].send = sendTraffic;
