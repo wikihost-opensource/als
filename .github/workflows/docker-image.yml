@@ -1,7 +1,9 @@
 name: 'docker image build'
 
 on:
-  create
+  pull_request:
+    branches:
+    - main
 
 jobs:
   docker:
