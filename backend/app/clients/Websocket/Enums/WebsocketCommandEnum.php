@@ -4,8 +4,9 @@ namespace Client\Websocket\Enums;
 
 use Client\Websocket\Commands\{
     Ping,
-    TraceRoute,
-    IPerf3
+    // TraceRoute,
+    IPerf3,
+    Speedtest
 };
 
 /**
@@ -33,6 +34,7 @@ enum WebsocketCommandEnum: int
     case Ping = 1;
         // case TraceRoute = 2;
     case IPerf3 = 4;
+    case SpeedTest = 5;
 
 
     public function getClass(): ?string
@@ -41,6 +43,7 @@ enum WebsocketCommandEnum: int
             self::Ping => Ping::class,
             // self::TraceRoute => TraceRoute::class,
             self::IPerf3 => IPerf3::class,
+            self::SpeedTest => Speedtest::class,
             default => null
         };
     }
@@ -51,6 +54,7 @@ enum WebsocketCommandEnum: int
             self::Ping => env('UTILITIES_PING', true),
             // self::TraceRoute => env('UTILITIES_TRACEROUTE', true),
             self::IPerf3 => env('UTILITIES_IPERF3', true),
+            self::SpeedTest => env('UTILITIES_SPEEDTESTDOTNET', true),
             default => false
         };
     }

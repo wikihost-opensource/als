@@ -7,7 +7,7 @@
           <div>
             <h4>下行</h4>
             <h1>{{ h5Download }} Mbps</h1>
-            <apexchart type="line" :options="h5SpeedtestDownloadSpeedChart.chartOptions" height="200px"
+            <apexchart type="area" :options="h5SpeedtestDownloadSpeedChart.chartOptions" height="200px"
               :series="h5SpeedtestDownloadSpeedChart.series">
             </apexchart>
           </div>
@@ -16,7 +16,7 @@
           <div>
             <h4>上行</h4>
             <h1>{{ h5Upload }} Mbps</h1>
-            <apexchart type="line" :options="h5SpeedtestUploadSpeedChart.chartOptions" height="200px"
+            <apexchart type="area" :options="h5SpeedtestUploadSpeedChart.chartOptions" height="200px"
               :series="h5SpeedtestUploadSpeedChart.series">
             </apexchart>
           </div>
@@ -216,7 +216,7 @@ export default defineComponent({
         },
         series: [
           {
-            type: "line",
+            type: "area",
             name: "Receive",
             data: [],
           },
@@ -271,7 +271,7 @@ export default defineComponent({
         },
         series: [
           {
-            type: "line",
+            type: "area",
             name: "Receive",
             data: [],
           },

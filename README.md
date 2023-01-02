@@ -22,7 +22,7 @@ docker run -d --name looking-glass --restart always --network host wikihostinc/l
 | DISPLAY_TRAFFIC           | true                                   | true                            | Toggle the streaming traffic graph                                                      |
 | ENABLE_SPEEDTEST          | true                                   | true                            | Toggle the speedtest feature                                                            |
 | UTILITIES_PING            | true                                   | true                            | Toggle the ping feature                                                                 |
-| UTILITIES_TRACEROUTE      | true                                   | true                            | Toggle the traceroute feature                                                           |
+| UTILITIES_SPEEDTESTDOTNET | true                                   | true                            | Toggle the speedtest.net feature                                                        |
 | UTILITIES_IPERF3          | true                                   | true                            | Toggle the iperf3 feature                                                               |
 | UTILITIES_IPERF3_PORT_MIN | 30000                                  | 30000                           | iperf3 listen port range - from                                                         |
 | UTILITIES_IPERF3_PORT_MAX | 31000                                  | 31000                           | iperf3 listen port range - to                                                           |

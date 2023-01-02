@@ -6,6 +6,7 @@
         <n-button v-show="componentConfig.utilities_ping" @click="activate('ping')">Ping</n-button>
         <!-- <n-button v-show="componentConfig.utilities_traceroute" @click="activate('traceroute')">Traceroute</n-button> -->
         <n-button v-show="componentConfig.utilities_iperf3" @click="activate('iperf3')">iPerf3</n-button>
+        <n-button @click="activate('speedtest')">Speedtest.net</n-button>
       </n-space>
     </n-card>
     <n-drawer v-model:show="componentSwitch.ping" :native-scrollbar="true" :width="drawWidth" placement="right">
@@ -28,6 +29,12 @@
         <iperf3 v-model:ws="ws" v-model:wsMessage="wsMessage" v-model:componentConfig="componentConfig" />
       </n-drawer-content>
     </n-drawer>
+
+    <n-drawer v-model:show="componentSwitch.speedtest" :native-scrollbar="true" :width="drawWidth" placement="right">
+      <n-drawer-content title="Speedtest.net GUI" :closable="true">
+        <speedtestdotnet v-model:ws="ws" v-model:wsMessage="wsMessage" v-model:componentConfig="componentConfig" />
+      </n-drawer-content>
+    </n-drawer>
   </div>
 </template>
 
@@ -39,6 +46,7 @@ export default defineComponent({
     // traceroute: defineAsyncComponent(() =>
     //   import("./Utilities/Traceroute.vue")
     // ),
+    speedtestdotnet: defineAsyncComponent(() => import("./Utilities/Speedtest.vue")),
     iperf3: defineAsyncComponent(() => import("./Utilities/iPerf3.vue")),
   },
   props: {
@@ -53,6 +61,7 @@ export default defineComponent({
         ping: false,
         traceroute: false,
         iperf3: false,
+        speedtest: false,
       },
     };
   },

@@ -22,9 +22,10 @@ if (!function_exists('applog')) {
 if (!function_exists('debuglog')) {
     function debuglog($content = '')
     {
-        if (env('DEBUG', false) !== false) return;
-        echo '[' . date("Y-m-d H:i:s") . "] {$content}\n";
+        if (env('DEBUG', false) === false) return;
+        echo '[' . date("Y-m-d H:i:s") . "] DEBUG - {$content}\n";
     }
+    debuglog("DEBUG Mode enabled");
 }
 
 if (!function_exists('execute')) {

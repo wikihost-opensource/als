@@ -15,6 +15,7 @@ RUN apk add --no-cache php81 php81-pecl-maxminddb php81-ctype php81-pecl-swoole 
     iputils
 
 ADD backend/app /app
+RUN sh /app/utilities/install_speedtest.sh
 COPY --from=0 /app/dist /app/webspaces
 
 CMD php81 /app/app.php

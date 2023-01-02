@@ -13,6 +13,7 @@ class Websocket
     private $closed = false;
     private $sendChannel = null;
     private $actionTicket = [];
+    private $commandThreads = [];
 
     public function __construct($request, $response, $fd)
     {
@@ -122,15 +123,16 @@ class Websocket
 
                 if (!$action->isEnable()) throw new \Exception('Class is not enabled');
             } catch (\Exception $e) {
-                applog("DEBUG: " . $e->getMessage());
+                \debuglog($e->getMessage());
                 // no match
                 return $this->close();
             }
 
             $ticket = $this->getTicket($action->name);
-
+            \debuglog('executing action: ' . $actionClassName);
             $actionClass = new $actionClassName($this, $action, $ticket);
             go(function () use ($actionClass, $data) {
+                $this->commandThreads[] = \Swoole\Coroutine::getCid();
                 $actionClass->execute($data);
             });
         }
