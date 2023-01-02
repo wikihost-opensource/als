@@ -7,8 +7,12 @@
           <div>
             <h4>下行</h4>
             <h1>{{ h5Download }} Mbps</h1>
-            <apexchart type="area" :options="h5SpeedtestDownloadSpeedChart.chartOptions" height="200px"
-              :series="h5SpeedtestDownloadSpeedChart.series">
+            <apexchart
+              type="area"
+              :options="h5SpeedtestDownloadSpeedChart.chartOptions"
+              height="200px"
+              :series="h5SpeedtestDownloadSpeedChart.series"
+            >
             </apexchart>
           </div>
         </n-gi>
@@ -16,8 +20,12 @@
           <div>
             <h4>上行</h4>
             <h1>{{ h5Upload }} Mbps</h1>
-            <apexchart type="area" :options="h5SpeedtestUploadSpeedChart.chartOptions" height="200px"
-              :series="h5SpeedtestUploadSpeedChart.series">
+            <apexchart
+              type="area"
+              :options="h5SpeedtestUploadSpeedChart.chartOptions"
+              height="200px"
+              :series="h5SpeedtestUploadSpeedChart.series"
+            >
             </apexchart>
           </div>
         </n-gi>
@@ -28,19 +36,37 @@
                 </h3>
                 <h3>上行: {{ h5Upload }}</h3> -->
     <n-space justify="space-evenly">
-      <n-button size="large" @click="startOrStopSpeedtest" style="margin-top: 10px">
-        <n-spin size="small" v-show="h5SpeedWorker !== null" style="margin-right: 10px" />
+      <n-button
+        size="large"
+        @click="startOrStopSpeedtest"
+        style="margin-top: 10px"
+      >
+        <n-spin
+          size="small"
+          v-show="h5SpeedWorker !== null"
+          style="margin-right: 10px"
+        />
         {{ h5SpeedtestButtonText }}
       </n-button>
     </n-space>
     <n-divider v-show="componentConfig?.testFiles?.length > 0" dashed />
-    <n-space v-if="componentConfig?.testFiles?.length > 0" justify="space-evenly">
+    <n-space
+      v-if="componentConfig?.testFiles?.length > 0"
+      justify="space-evenly"
+    >
       <div v-if="componentConfig.public_ipv4">
         <h3 style="text-align: center">IPv4 下载测试</h3>
         <n-space>
           <template v-for="i in componentConfig.testFiles">
-            <n-button strong secondary type="info" size="small" tag="a"
-              :href="`//${componentConfig.public_ipv4}/speedtest-static/${i}.test`" target="_blank">
+            <n-button
+              strong
+              secondary
+              type="info"
+              size="small"
+              tag="a"
+              :href="`//${componentConfig.public_ipv4}/speedtest-static/${i}.test`"
+              target="_blank"
+            >
               {{ i }}
             </n-button>
           </template>
@@ -51,8 +77,15 @@
         <h3 style="text-align: center">IPv6 下载测试</h3>
         <n-space>
           <template v-for="i in componentConfig.testFiles">
-            <n-button strong secondary type="info" size="small" tag="a"
-              :href="`//[${componentConfig.public_ipv6}]/speedtest-static/${i}.test`" target="_blank">
+            <n-button
+              strong
+              secondary
+              type="info"
+              size="small"
+              tag="a"
+              :href="`//[${componentConfig.public_ipv6}]/speedtest-static/${i}.test`"
+              target="_blank"
+            >
               {{ i }}
             </n-button>
           </template>
@@ -146,12 +179,12 @@ export default defineComponent({
       };
       this.h5SpeedWorker.postMessage(
         "start " +
-        JSON.stringify({
-          test_order: "D_U",
-          url_dl: "speedtest/download",
-          url_ul: "speedtest/upload",
-          url_ping: "speedtest/upload",
-        })
+          JSON.stringify({
+            test_order: "D_U",
+            url_dl: "speedtest/download",
+            url_ul: "speedtest/upload",
+            url_ping: "speedtest/upload",
+          })
       );
       this.h5SpeedWorkerTimer = setInterval(() => {
         this.h5SpeedWorker.postMessage("status");
@@ -279,6 +312,6 @@ export default defineComponent({
       },
     };
   },
-  mounted() { },
+  mounted() {},
 });
 </script>
