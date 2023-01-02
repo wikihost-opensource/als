@@ -42,7 +42,7 @@ class Speedtest extends Base
         $processArgs = ['--accept-license', '-f jsonl'];
         if (!is_null($serverId)) {
             if (!is_numeric($serverId)) return $this->end();
-            $processArgs[] = '--serverId=' . $serverId;
+            $processArgs[] = '-s ' . $serverId;
         }
         $this->client->send("{$this->commandIndex}|1|{$this->ticket}");
 
