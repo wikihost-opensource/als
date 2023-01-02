@@ -1,6 +1,6 @@
 <?php
+if (env('ENABLE_SPEEDTEST', true) !== true) return;
 go(function () {
-    if (!env('ENABLE_SPEEDTEST', true)) { return; }
     $server = new Swoole\Coroutine\Http\Server('unix:///tmp/speedtest.sock');
     $server->handle('/upload', function ($request, $response) {
         $response->header('server', 'webserver/1.0');

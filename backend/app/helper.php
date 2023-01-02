@@ -19,6 +19,15 @@ if (!function_exists('applog')) {
     }
 }
 
+if (!function_exists('debuglog')) {
+    function debuglog($content = '')
+    {
+        if (env('DEBUG', false) === false) return;
+        echo '[' . date("Y-m-d H:i:s") . "] DEBUG - {$content}\n";
+    }
+    debuglog("DEBUG Mode enabled");
+}
+
 if (!function_exists('execute')) {
     function execute($command)
     {
@@ -62,7 +71,7 @@ class Process
     public function __construct($program, array $args = [])
     {
         $this->command = implode(' ', array_merge([$program], $args));
-        var_dump($this->command);
+        debuglog("Run command:" . $this->command);
     }
 
     public function getOutput()
