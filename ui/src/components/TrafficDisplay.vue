@@ -21,7 +21,7 @@
                 </span>
               </n-gi>
               <n-gi span="2">
-                <apexchart type="line" :options="interfaceData.chartOptions" :series="interfaceData.series">
+                <apexchart type="area" :options="interfaceData.chartOptions" :series="interfaceData.series">
                 </apexchart>
               </n-gi>
             </n-grid>
@@ -73,6 +73,10 @@ export default defineComponent({
               dynamicAnimation: {
                 speed: 1000,
               },
+              animateGradually: {
+                enabled: true,
+                delay: 300
+              }
             },
             zoom: {
               enabled: false,
@@ -114,12 +118,12 @@ export default defineComponent({
         },
         series: [
           {
-            type: "line",
+            type: "area",
             name: "Receive",
             data: [],
           },
           {
-            type: "line",
+            type: "area",
             name: "Send",
             data: [],
           },
