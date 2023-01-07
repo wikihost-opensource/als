@@ -9,7 +9,7 @@
               <td>{{ data.key }}</td>
               <td>
                 <n-button text @click="copySomething(data.value)">{{
-                data.value
+                  data.value
                 }}</n-button>
               </td>
             </tr>
@@ -74,6 +74,8 @@ export default defineComponent({
           this.componentConfig.utilities_ping = data.utilities_ping;
           this.componentConfig.utilities_traceroute = data.utilities_traceroute;
           this.componentConfig.utilities_iperf3 = data.utilities_iperf3;
+          this.componentConfig.utilities_speedtestdotnet = data.utilities_speedtestdotnet;
+          this.componentConfig.utilities_fakeshell = data.utilities_fakeshell;
 
           this.tableData = [];
           this.tableData.push({

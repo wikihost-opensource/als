@@ -1,9 +1,22 @@
 <?php
+
 go(function () {
-    do {
-        foreach (['/tmp/speedtest.sock', '/tmp/speedtest-api.sock'] as $file) {
-            if (!file_exists($file)) continue;
-            chmod($file, 0777);
+    foreach ([
+        '/run/speedtest.sock' => env('ENABLE_SPEEDTEST', true),
+        '/run/speedtest-api.sock' => true,
+        '/run/ttyd.sock' => env('UTILITIES_FAKESHELL', true)
+    ] as $file => $isEnable) {
+        if (!$isEnable)  continue;
+        while (true) {
+            // applog("Waiting sock file: " . $file);
+            if (!file_exists($file)) {
+                sleep(1);
+                continue;
+            }
+            break;
         }
-    } while (false);
+        chmod($file, 0770);
+        chown($file, "root");
+        chgrp($file, "app");
+    }
 });

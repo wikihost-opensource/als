@@ -71,7 +71,17 @@ class Websocket
 
         unset(self::$clients[$this->fd]);
 
+        foreach ($this->commandThreads as $class => $cid) {
+            \Swoole\Coroutine::cancel($cid);
+        }
+        $this->commandThreads = [];
+
         return true;
+    }
+
+    public function isClosed(): bool
+    {
+        return $this->closed;
     }
 
     private function auth()
@@ -131,8 +141,11 @@ class Websocket
             $ticket = $this->getTicket($action->name);
             \debuglog('executing action: ' . $actionClassName);
             $actionClass = new $actionClassName($this, $action, $ticket);
-            go(function () use ($actionClass, $data) {
-                $this->commandThreads[] = \Swoole\Coroutine::getCid();
+            go(function () use ($actionClass, $actionClassName, $data) {
+                if (isset($this->commandThreads[$actionClassName])) {
+                    \Swoole\Coroutine::cancel($this->commandThreads[$actionClassName]);
+                }
+                $this->commandThreads[$actionClassName] = \Swoole\Coroutine::getCid();
                 $actionClass->execute($data);
             });
         }

@@ -26,6 +26,10 @@ export default defineConfig({
         target: "ws://127.0.0.1:80",
         ws: true,
       },
+      "/shell": {
+        target: "ws://127.0.0.1:80",
+        ws: true,
+      },
       "/speedtest-static": {
         target: "http://127.0.0.1:80",
       },

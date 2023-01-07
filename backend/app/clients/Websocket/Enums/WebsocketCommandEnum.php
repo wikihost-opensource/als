@@ -6,6 +6,7 @@ use Client\Websocket\Commands\{
     Ping,
     // TraceRoute,
     IPerf3,
+    Shell,
     Speedtest
 };
 
@@ -35,6 +36,7 @@ enum WebsocketCommandEnum: int
         // case TraceRoute = 2;
     case IPerf3 = 4;
     case SpeedTest = 5;
+    case Shell = 6;
 
 
     public function getClass(): ?string
@@ -44,6 +46,7 @@ enum WebsocketCommandEnum: int
             // self::TraceRoute => TraceRoute::class,
             self::IPerf3 => IPerf3::class,
             self::SpeedTest => Speedtest::class,
+            self::Shell => Shell::class,
             default => null
         };
     }
@@ -55,6 +58,7 @@ enum WebsocketCommandEnum: int
             // self::TraceRoute => env('UTILITIES_TRACEROUTE', true),
             self::IPerf3 => env('UTILITIES_IPERF3', true),
             self::SpeedTest => env('UTILITIES_SPEEDTESTDOTNET', true),
+            self::Shell => env('UTILITIES_FAKESHELL', true),
             default => false
         };
     }

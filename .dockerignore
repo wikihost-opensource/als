@@ -11,3 +11,4 @@ backend/app/webspaces/speedtest_worker.js
 backend/app/webspaces/assets
 backend/app/webspaces/index.html
 backend/app/webspaces/favicon.ico
+backend/app/utilities/speedtest
