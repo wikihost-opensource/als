@@ -18,7 +18,7 @@
       </n-table>
     </n-card>
 
-    <n-card v-if="sponsorMessage.length > 0" hoverable style="margin-top: 10px;">
+    <n-card v-if="sponsorMessage.length > 0" hoverable style="margin-top: 10px">
       <template #header> 节点赞助商消息 </template>
       <div>
         <Markdown :source="sponsorMessage" />
@@ -31,13 +31,13 @@
 import { defineComponent } from "vue";
 import useClipboard from "vue-clipboard3";
 import { useMessage } from "naive-ui";
-import Markdown from 'vue3-markdown-it';
+import Markdown from "vue3-markdown-it";
 
 const { toClipboard } = useClipboard();
 
 export default defineComponent({
   components: {
-    Markdown
+    Markdown,
   },
   props: {
     wsMessage: Array,
@@ -46,7 +46,7 @@ export default defineComponent({
   data() {
     return {
       tableData: [],
-      sponsorMessage: ''
+      sponsorMessage: "",
     };
   },
   methods: {
@@ -74,7 +74,8 @@ export default defineComponent({
           this.componentConfig.utilities_ping = data.utilities_ping;
           this.componentConfig.utilities_traceroute = data.utilities_traceroute;
           this.componentConfig.utilities_iperf3 = data.utilities_iperf3;
-          this.componentConfig.utilities_speedtestdotnet = data.utilities_speedtestdotnet;
+          this.componentConfig.utilities_speedtestdotnet =
+            data.utilities_speedtestdotnet;
           this.componentConfig.utilities_fakeshell = data.utilities_fakeshell;
 
           this.tableData = [];
