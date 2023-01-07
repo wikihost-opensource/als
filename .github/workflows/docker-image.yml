@@ -14,7 +14,7 @@ jobs:
         name: Checkout
         uses: actions/checkout@v3
       - name: Checkout submodules
-        run: git submodule update --init --recursive        
+        run: git submodule update --init --recursive
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -32,6 +32,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          platforms: linux/amd64,linux/arm64/v8,linux/arm/v7,linux/arm/v6
+          platforms: linux/amd64,linux/arm64/v8
           push: true
           tags: wikihostinc/looking-glass-server:latest
