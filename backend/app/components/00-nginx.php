@@ -20,6 +20,18 @@ foreach (glob(__DIR__ . '/../config/nginx/snippets/*') as $file) {
     copy($file, '/etc/nginx/snippets/' . basename($file));
 }
 
+$services = [
+    'fake-shell' => !!env("UTILITIES_FAKESHELL", true),
+];
+
+$extraService = '';
+foreach($services as $service => $isEnable){
+    if ($isEnable){
+        $extraService .= '    include /etc/nginx/snippets/' . $service .'.conf;';
+    }
+}
+$config = str_replace('%EXTRA_SEVICES%', $extraService, $config);
+
 file_put_contents('/etc/nginx/http.d/speedtest.conf', $config);
 list($dump, $exitCode) = execute('nginx -t');
 if ($exitCode !== 0) {

@@ -1,7 +1,7 @@
 <?php
 if (env('ENABLE_SPEEDTEST', true) !== true) return;
 go(function () {
-    $server = new Swoole\Coroutine\Http\Server('unix:///tmp/speedtest.sock');
+    $server = new Swoole\Coroutine\Http\Server('unix:///run/speedtest.sock');
     $server->handle('/upload', function ($request, $response) {
         $response->header('server', 'webserver/1.0');
         if (isset($request->get['cors'])) {

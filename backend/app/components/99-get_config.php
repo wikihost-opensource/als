@@ -9,10 +9,13 @@ $config = [
     'display_speedtest' => env('ENABLE_SPEEDTEST', true),
     'utilities_ping' => env('UTILITIES_PING', true),
     'utilities_traceroute' => env('UTILITIES_TRACEROUTE', true),
+
     'utilities_iperf3' => env('UTILITIES_IPERF3', true),
     'utilities_iperf3_port_min' => env('UTILITIES_IPERF3_PORT_MIN', '30000'),
     'utilities_iperf3_port_max' => env('UTILITIES_IPERF3_PORT_MAX', '31000'),
-    'utilities_speedtestdotnet' => env('UTILITIES_SPEEDTESTDOTNET', '31000'),
+
+    'utilities_speedtestdotnet' => env('UTILITIES_SPEEDTESTDOTNET', true),
+    'utilities_fakeshell' => env('UTILITIES_FAKESHELL', true),
 
     // 赞助商信息
     'sponsor_message' => '',

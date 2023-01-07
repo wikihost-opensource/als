@@ -1,7 +1,7 @@
 <?php
 
 go(function () {
-    $server = new Swoole\Coroutine\Http\Server('unix:///tmp/speedtest-api.sock');
+    $server = new Swoole\Coroutine\Http\Server('unix:///run/speedtest-api.sock');
     $server->handle('/', function (Swoole\Http\Request $request, Swoole\Http\Response $response) {
         $response->header('Server', 'webserver/1.0');
         applog('Client incoming, IP:' . $request->header['x-real-ip']);
