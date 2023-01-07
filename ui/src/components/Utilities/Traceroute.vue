@@ -1,8 +1,13 @@
 <template>
   <n-space vertical>
     <n-input-group>
-      <n-input :disabled="working" v-model:value="host" :style="{ width: '90%' }" placeholder="IP Address Or Domain"
-        @keyup.enter="traceroute" />
+      <n-input
+        :disabled="working"
+        v-model:value="host"
+        :style="{ width: '90%' }"
+        placeholder="IP Address Or Domain"
+        @keyup.enter="traceroute"
+      />
       <n-button :loading="working" type="primary" ghost @click="traceroute()">
         Traceroute
       </n-button>
