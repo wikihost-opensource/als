@@ -9,7 +9,8 @@ RUN npm i && \
 FROM alpine:3.16
 LABEL maintainer="samlm0 <update@ifdream.net>"
 
-RUN apk add --no-cache php81 php81-pecl-maxminddb php81-ctype php81-pecl-swoole nginx xz \
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories \
+    && apk add --no-cache php81 php81-pecl-maxminddb php81-ctype php81-pecl-swoole nginx xz \
     iperf iperf3 \
     mtr \
     traceroute \
