@@ -6,6 +6,11 @@ fix_arch(){
         echo "arm64"
         return 0
     fi;
+
+    if [ "$ARCH" == "x86_64" ];then
+        echo "amd64"
+        return 0
+    fi;
     echo $ARCH
 }
 
