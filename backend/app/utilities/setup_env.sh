@@ -1,12 +1,13 @@
 #!/bin/sh
+mkdir /mnt/fakebin
 sh /app/utilities/install_speedtest.sh
+sh /app/utilities/install_software.sh
 
 ln -sf /bin/bash /bin/rbash
 mkdir /mnt/fakeroot
 adduser -h /mnt/fakeroot -s /bin/rbash -D r00t
 chown -R root:root /mnt/fakeroot
 
-mkdir /mnt/fakebin
 
 # fool hacker
 echo -en '#/bin/sh\necho root' > /mnt/fakebin/whoami
