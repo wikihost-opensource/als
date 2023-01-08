@@ -12,8 +12,12 @@ mkdir /mnt/fakebin
 echo -en '#/bin/sh\necho root' > /mnt/fakebin/whoami
 echo -en '#/bin/sh\necho "ls: $1: No such file or directory"' > /mnt/fakebin/ls
 echo -en '#/bin/sh\ntrue' > /mnt/fakebin/rm
-chmod +x /mnt/fakebin/*
 
+
+# mod ping
+echo -en '#!/bin/bash\nARG="${@: -1}"\n/bin/ping $ARG\n'
+
+chmod +x /mnt/fakebin/*
 
 echo '' > /mnt/fakeroot/.bashrc
 echo "alias export='echo \"Insufficient memory\" && false'" >> /mnt/fakeroot/.bashrc
@@ -31,5 +35,4 @@ ln -sf /usr/bin/clear /mnt/fakebin/clear
 # network tools
 ln -sf /usr/sbin/mtr /mnt/fakebin/mtr
 ln -sf /usr/sbin/mtr-packet /mnt/fakebin/mtr-packet
-ln -sf /bin/ping /mnt/fakebin/ping
 ln -sf /usr/bin/traceroute /mnt/fakebin/traceroute
