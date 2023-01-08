@@ -30,5 +30,6 @@ foreach (explode(" ", env('SPEEDTEST_FILE_LIST', '1MB 10MB 100MB 1GB')) as $spee
         fwrite($speedtestFd, fread($random, $readSize));
     }
     fclose($speedtestFd);
+    chgrp($path, "app");
     fclose($random);
 }
