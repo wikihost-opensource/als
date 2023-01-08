@@ -9,6 +9,15 @@ if [ $? -ne 0 ];then
 fi;
 
 echo "Your session will logout in $TIMEOUT seconds"
+echo ""
+echo "Current session enable following command(s):"
+echo " - ping"
+echo " - traceroute"
+echo " - mtr"
+echo " - nexttrace (https://github.com/sjlleo/nexttrace)"
+echo ""
+echo "Kindly notice: Be nice, don't be evil."
+
 cd /mnt/fakeroot
 env -i PATH="/mnt/fakebin" HOME="/mnt/fakeroot" PWD="/mnt/fakeroot" \
     /sbin/runuser -u r00t -- /bin/bash -c "unset LOGNAME && unset USER && export PS1=\"[root@localhost ~]# \" && export TERM=\"$TERM\" && ulimit -u 20 && /usr/bin/timeout -s 9 $TIMEOUT /bin/rbash"

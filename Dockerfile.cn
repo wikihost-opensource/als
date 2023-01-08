@@ -16,7 +16,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
     traceroute \
     iputils \
     bind-tools \
-    bash runuser ttyd shadow \
+    bash runuser ttyd shadow sudo \
     && addgroup app \
     && usermod -a -G app root \
     && usermod -a -G app nginx \
