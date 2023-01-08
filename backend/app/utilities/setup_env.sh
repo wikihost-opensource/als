@@ -15,6 +15,9 @@ echo -en '#/bin/sh\ntrue' > /mnt/fakebin/rm
 chmod +x /mnt/fakebin/*
 
 
+echo '' > /mnt/fakeroot/.bashrc
+echo "alias export='echo \"Insufficient memory\"'" >> /mnt/fakeroot/.bashrc
+
 # misc
 ln -sf /usr/bin/free /mnt/fakebin/free
 ln -sf /bin/df /mnt/fakebin/df
