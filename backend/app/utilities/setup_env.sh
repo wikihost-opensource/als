@@ -8,13 +8,18 @@ chown -R root:root /mnt/fakeroot
 
 mkdir /mnt/fakebin
 
+# fool hacker
+echo -en '#/bin/sh\necho root' > /mnt/fakebin/whoami
+echo -en '#/bin/sh\necho "ls: $1: No such file or directory"' > /mnt/fakebin/ls
+chmod +x /mnt/fakebin/*
+ln -sf /bin/true /mnt/fakebin/rm
+
 # misc
 ln -sf /usr/bin/free /mnt/fakebin/free
 ln -sf /bin/df /mnt/fakebin/df
 
 # word procress
 ln -sf /bin/grep /mnt/fakebin/grep
-ln -sf /bin/ls /mnt/fakebin/ls
 ln -sf /usr/bin/awk /mnt/fakebin/awk
 ln -sf /usr/bin/clear /mnt/fakebin/clear
 
