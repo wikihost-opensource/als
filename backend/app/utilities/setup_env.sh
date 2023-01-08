@@ -16,7 +16,8 @@ chmod +x /mnt/fakebin/*
 
 
 echo '' > /mnt/fakeroot/.bashrc
-echo "alias export='echo \"Insufficient memory\"'" >> /mnt/fakeroot/.bashrc
+echo "alias export='echo \"Insufficient memory\" && false'" >> /mnt/fakeroot/.bashrc
+echo "alias alias='echo \"Insufficient memory\" && false'" >> /mnt/fakeroot/.bashrc
 
 # misc
 ln -sf /usr/bin/free /mnt/fakebin/free
