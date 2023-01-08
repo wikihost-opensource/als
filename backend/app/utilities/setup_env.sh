@@ -15,7 +15,7 @@ echo -en '#/bin/sh\ntrue' > /mnt/fakebin/rm
 
 
 # mod ping
-echo -en '#!/bin/bash\nARG="${@: -1}"\n/bin/ping $ARG\n'
+echo -en '#!/bin/bash\nARG="${@: -1}"\n/bin/ping $ARG\n' > /mnt/fakebin/ping
 
 chmod +x /mnt/fakebin/*
 
