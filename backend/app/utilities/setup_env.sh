@@ -11,7 +11,7 @@ mkdir /mnt/fakebin
 # fool hacker
 echo -en '#/bin/sh\necho root' > /mnt/fakebin/whoami
 echo -en '#/bin/sh\necho "ls: $1: No such file or directory"' > /mnt/fakebin/ls
-ln -sf /bin/true /mnt/fakebin/rm
+echo -en '#/bin/sh\ntrue' > /mnt/fakebin/whoami
 chmod +x /mnt/fakebin/*
 
 
