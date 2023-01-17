@@ -64,7 +64,7 @@
               type="info"
               size="small"
               tag="a"
-              :href="`//${componentConfig.public_ipv4}/speedtest-static/${i}.test`"
+              :href="`./speedtest-static/${i}.test`"
               target="_blank"
             >
               {{ i }}
@@ -83,7 +83,7 @@
               type="info"
               size="small"
               tag="a"
-              :href="`//[${componentConfig.public_ipv6}]/speedtest-static/${i}.test`"
+              :href="`./speedtest-static/${i}.test`"
               target="_blank"
             >
               {{ i }}
