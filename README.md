@@ -33,14 +33,10 @@ docker run -d --name looking-glass --restart always --network host wikihostinc/l
 
 ## Features
 - [x] HTML 5 Speed Test
-- [x] Traceroute - IPv4
 - [x] Ping - IPv4
 - [x] iPerf3 server
 - [x] Streaming traffic graph
-
-## TO-DO List
-- [ ] Traceroute - IPv6
-- [ ] Ping - IPv6
+- [x] Online shell box (limited commands)
 
 ## Thanks to
 https://github.com/librespeed/speedtest
