@@ -36,6 +36,7 @@ docker run -d --name looking-glass --restart always --network host wikihostinc/l
 - [x] Ping - IPv4
 - [x] iPerf3 server
 - [x] Streaming traffic graph
+- [x] Speedtest.net Client
 - [x] Online shell box (limited commands)
 
 ## Thanks to
