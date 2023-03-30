@@ -40,6 +40,36 @@ if (!function_exists('execute')) {
     }
 }
 
+if (!function_exists('maxmind_update')) {
+    function maxmind_update($key)
+    {
+        $fp = fopen('/tmp/maxmind.tar.gz', 'w');
+
+        applog("INFO: Downloading IP Database...");
+
+        [$errCode, $_, $httpCode] =  _wget(
+            "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key={$key}&suffix=tar.gz",
+            [
+                CURLOPT_RETURNTRANSFER => 0,
+                CURLOPT_FILE => $fp,
+            ]
+        );
+        fclose($fp);
+        if ($httpCode === 200) {
+            applog("INFO: Downloaded IP Database, Verifing...");
+            execute('/bin/tar zxvf /tmp/maxmind.tar.gz -C /tmp');
+            $files = glob('/tmp/*/*.mmdb');
+            $dbFile = array_pop($files);
+            unlink('/app/ip.mmdb');
+            copy($dbFile, 'app/ip.mmdb');
+            # clean up /tmp
+            execute("rm -rf /tmp");
+            return true;
+        }
+        return false;
+    }
+}
+
 if (!function_exists('_wget')) {
     function _wget($url, $options = [])
     {

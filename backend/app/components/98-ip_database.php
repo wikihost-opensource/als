@@ -5,27 +5,16 @@ go(function () {
     $maxmind_license = env('MAXMIND_KEY');
 
     if ($maxmind_license) {
-        $fp = fopen('/tmp/maxmind.tar.gz', 'w');
+        maxmind_update($maxmind_license);
 
-        applog("INFO: Downloading IP Database...");
-
-        [$errCode, $_, $httpCode] =  _wget(
-            "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=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&suffix=tar.gz",
-            [
-                CURLOPT_RETURNTRANSFER => 0,
-                CURLOPT_FILE => $fp,
-            ]
-        );
-        if ($httpCode === 200) {
-            applog("INFO: Downloaded IP Database, Verifing...");
-            execute('/bin/tar zxvf /tmp/maxmind.tar.gz -C /tmp');
-            $files = glob('/tmp/*/*.mmdb');
-            $dbFile = array_pop($files);
-            unlink('/app/ip.mmdb');
-            copy($dbFile, 'app/ip.mmdb');
-        } else {
-            applog("ERROR: Failed to download IP Database, fallback to local...");
-        }
+        // 30 (day) * 86400 (to seconds) * 1000 (to milliseconds)
+        Swoole\Timer::tick(30 * 86400 * 1000, function () use ($maxmind_license) {
+            global $reader;
+            $result = maxmind_update($maxmind_license);
+            if ($result) {
+                $reader = new MaxMind\Db\Reader('/app/ip.mmdb');
+            }
+        });
     }
 
 
