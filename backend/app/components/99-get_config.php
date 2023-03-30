@@ -24,22 +24,45 @@ $config = [
 // 空的字符串分割出来也会有一个空元素, 判断出来然后置空
 if (trim($config['testfiles'][0]) === '') $config['testfiles'] = [];
 
-$sponsor_message = env('SPONSOR_MESSAGE', '');
-/**
- * 如果文件存在则读取文件的内容, 不存在就直接当内容实用
- */
-if (file_exists($sponsor_message)) {
-    applog('INFO: Reading sponsor message from file: ' . $sponsor_message);
-    $sponsor_message = file_get_contents($sponsor_message);
-} elseif (filter_var(FILTER_VALIDATE_URL, $sponsor_message)) {
-    applog('INFO: Downloading sponsor message from url: ' . $sponsor_message);
-    [$errNo, $data] = _wget($sponsor_message);
-    if ($errNo === 0) {
+go(function () {
+    global $config;
+    $sponsor_message = env('SPONSOR_MESSAGE', '');
+    if (file_exists($sponsor_message)) {
+        // 如果 SPONSOR_MESSAGE 是文件且文件存在则读取文件的内容
+        applog('INFO: Reading sponsor message from file: ' . $sponsor_message);
+        $sponsor_message = file_get_contents($sponsor_message);
+    } elseif (filter_var($sponsor_message, FILTER_VALIDATE_URL)) {
+        // 如果 SPONSOR_MESSAGE 是 URL 则下载内容
+        applog('INFO: Downloading sponsor message from url: ' . $sponsor_message);
+        [$errNo, $data] = _wget($sponsor_message);
+        if ($errNo !== 0) {
+            applog('ERROR: Could not download sponsor message');
+            exit(1);
+        }
+        $update_url = $sponsor_message;
         $sponsor_message = $data;
-    }
-}
+        $update_interval = env('SPONSOR_MESSAGE_UPDATE_INTERVAL', 3600);
 
-$config['sponsor_message'] = $sponsor_message;
+        if ($update_interval > 0) {
+            applog('INFO: sponsor message will auto update in ' . $update_interval . ' seconds, from url: ' . $update_url);
+            $update_interval = $update_interval * 1000;
+            Swoole\Timer::tick($update_interval, function () use ($update_url) {
+                global $config;
+                applog('INFO: Downloading sponsor message from url: ' . $update_url);
+                [$errNo, $data] = _wget($update_url);
+                if ($errNo !== 0) {
+                    applog('ERROR: Could not download sponsor message');
+                    return;
+                }
+                $config['sponsor_message'] = $data;
+            });
+        }
+    }
+
+    // 如果 SPONSOR_MESSAGE 没有被设置, 那原文是什么则是什么
+    $config['sponsor_message'] = $sponsor_message;
+});
+
 
 go(function () {
     global $config;
