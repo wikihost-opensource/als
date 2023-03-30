@@ -8,7 +8,7 @@ go(function () {
     ] as $file => $isEnable) {
         if (!$isEnable)  continue;
         while (true) {
-            // applog("Waiting sock file: " . $file);
+            applog("Waiting sock file: " . $file);
             if (!file_exists($file)) {
                 sleep(1);
                 continue;

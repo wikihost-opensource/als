@@ -6,7 +6,7 @@ RUN npm i && \
     npm run build \
     && chmod -R 650 /app/dist
 
-FROM alpine:3.16
+FROM alpine:3
 LABEL maintainer="samlm0 <update@ifdream.net>"
 
 RUN apk add --no-cache php81 php81-posix php81-pecl-maxminddb php81-ctype php81-pecl-swoole nginx xz \

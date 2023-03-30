@@ -20,7 +20,7 @@
 
     <n-card v-if="sponsorMessage.length > 0" hoverable style="margin-top: 10px">
       <template #header> 节点赞助商消息 </template>
-      <div>
+      <div class="sponsor">
         <Markdown :source="sponsorMessage" />
       </div>
     </n-card>
@@ -114,3 +114,10 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+.sponsor a {
+  color: #70c0e8;
+  text-decoration: none;
+}
+</style>
