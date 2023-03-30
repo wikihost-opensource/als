@@ -31,7 +31,14 @@ $sponsor_message = env('SPONSOR_MESSAGE', '');
 if (file_exists($sponsor_message)) {
     applog('INFO: Reading sponsor message from file: ' . $sponsor_message);
     $sponsor_message = file_get_contents($sponsor_message);
+} elseif (filter_var(FILTER_VALIDATE_URL, $sponsor_message)) {
+    applog('INFO: Downloading sponsor message from url: ' . $sponsor_message);
+    [$errNo, $data] = _wget($sponsor_message);
+    if ($errNo === 0) {
+        $sponsor_message = $data;
+    }
 }
+
 $config['sponsor_message'] = $sponsor_message;
 
 go(function () {
