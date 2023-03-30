@@ -3,7 +3,7 @@ $config = [
     'testfiles' => explode(" ", trim(env('SPEEDTEST_FILE_LIST', '1MB 10MB 100MB 1GB'))),
     'public_ipv4' => env('PUBLIC_IPV4'),
     'public_ipv6' => env('PUBLIC_IPV6'),
-    'location' => env('LOCATION', 'Unset'),
+    'location' => env('LOCATION', false),
     'bandwidth' => env('DISPLAY_BANDWIDTH'),
     'display_traffic' => env('DISPLAY_TRAFFIC', true),
     'display_speedtest' => env('ENABLE_SPEEDTEST', true),
@@ -44,41 +44,38 @@ go(function () {
     }
 
     if (!$config['public_ipv4'] || !ip2long($config['public_ipv4'])) {
-        $curl = curl_init('http://ifconfig.co/json');
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
-        $data = curl_exec($curl);
-        $errNo = curl_errno($curl);
-        curl_close($curl);
+        [$errNo, $data] = _wget('http://ifconfig.co/json', [CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4]);
         if ($errNo !== 0) {
             applog('ERROR: Failed to get public ipv4');
         } else {
             $data = json_decode($data, true);
             if (isset($data['ip'])) {
                 $config['public_ipv4'] = $data['ip'];
-                $config['location'] = geo_lookup_ip($config['public_ipv4']);
             }
         }
     }
-    // $data = json_decode($data, true);
 
     if (!$config['public_ipv6']) {
-        $curl = curl_init('http://ifconfig.co/json');
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V6);
-        $data = curl_exec($curl);
-        $errNo = curl_errno($curl);
-        curl_close($curl);
+        [$errNo, $data] = _wget('http://ifconfig.co/json', [CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V6]);
         if ($errNo !== 0) {
             applog('ERROR: Failed to get public ipv6');
         } else {
             $data = json_decode($data, true);
             if (isset($data['ip'])) {
                 $config['public_ipv6'] = $data['ip'];
-                if (!isset($config['location'])) {
-                    $config['location'] = geo_lookup_ip($config['public_ipv6']);
-                }
             }
         }
+    }
+
+    if ($config['public_ipv4'] && !$config['location']) {
+        $config['location'] = geo_lookup_ip($config['public_ipv4']);
+    }
+
+    if ($config['public_ipv6'] && !$config['location']) {
+        $config['location'] = geo_lookup_ip($config['public_ipv6']);
+    }
+
+    if ($config['location'] === false) {
+        $config['location'] = 'Unset';
     }
 });
