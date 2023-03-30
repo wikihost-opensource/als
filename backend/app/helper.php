@@ -40,6 +40,20 @@ if (!function_exists('execute')) {
     }
 }
 
+if (!function_exists('_wget')) {
+    function _wget($url, $options = [])
+    {
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt_array($curl, $options);
+        $data = curl_exec($curl);
+        $errNo = curl_errno($curl);
+        curl_close($curl);
+
+        return [$errNo, $data];
+    }
+}
+
 if (!function_exists('geo_lookup_ip')) {
     function geo_lookup_ip($ip, $language = 'zh-CN')
     {
