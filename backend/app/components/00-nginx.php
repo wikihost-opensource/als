@@ -15,6 +15,11 @@ $config = file_get_contents($basicConfPath);
 $config = str_replace('%HTTP_PORT%', env('HTTP_PORT', 80), $config);
 $config = str_replace('%LISTEN_IP%', env('LISTEN_IP', '0.0.0.0'), $config);
 
+// enable proxy protocol
+if (env("BEHIND_PROXY", false)) {
+    $config = str_replace('default_server', 'default_server proxy_protocol', $config);
+}
+
 @mkdir('/etc/nginx/snippets');
 foreach (glob(__DIR__ . '/../config/nginx/snippets/*') as $file) {
     copy($file, '/etc/nginx/snippets/' . basename($file));
@@ -25,9 +30,9 @@ $services = [
 ];
 
 $extraService = '';
-foreach($services as $service => $isEnable){
-    if ($isEnable){
-        $extraService .= '    include /etc/nginx/snippets/' . $service .'.conf;';
+foreach ($services as $service => $isEnable) {
+    if ($isEnable) {
+        $extraService .= '    include /etc/nginx/snippets/' . $service . '.conf;';
     }
 }
 $config = str_replace('%EXTRA_SEVICES%', $extraService, $config);
