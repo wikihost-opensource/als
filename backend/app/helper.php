@@ -48,9 +48,10 @@ if (!function_exists('_wget')) {
         curl_setopt_array($curl, $options);
         $data = curl_exec($curl);
         $errNo = curl_errno($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
-        return [$errNo, $data];
+        return [$errNo, $data, $httpcode];
     }
 }
 
