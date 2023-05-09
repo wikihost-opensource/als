@@ -42,12 +42,9 @@ docker run -d --name looking-glass --restart always --network host wikihostinc/l
 - [x] Online shell box (limited commands)
 
 ## Thanks to
-librespeed/speedtest provide core html5 speedtest code
 https://github.com/librespeed/speedtest
-(backend/app/components/01-fake_file_server.php)
 
-JetBrains provide IDE license
-![JetBrains Logo (Main) logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png)
+https://www.jetbrains.com/
 
 ## License
 
