@@ -12,7 +12,7 @@ class Ping extends Base
         if ($host === false || ($host == $domain && !ip2long($domain))) {
             return $this->end();
         }
-        $this->client->send("{$this->commandIndex}|1|{$host}|{$this->ticket}");
+        $this->client->send("{$this->commandIndex}|1|{$domain}|{$this->ticket}");
 
         $total = 10;
         $process = new \Process('/bin/ping', ['-O', '-c 10', $host]);
@@ -31,9 +31,9 @@ class Ping extends Base
 
             preg_match_all('/icmp_seq=(\d+) ttl=(\d+) time=(\d+.\d+) ms/m', $content, $matches, PREG_SET_ORDER, 0);
             if (empty($matches)) {
-                $this->send("1|{$host}|-1");
+                $this->send("1|{$domain}|-1");
             } else {
-                $this->send("1|{$host}|{$matches[0][1]}|{$matches[0][2]}|{$matches[0][3]}");
+                $this->send("1|{$domain}|{$matches[0][1]}|{$matches[0][2]}|{$matches[0][3]}");
             }
         }
 
