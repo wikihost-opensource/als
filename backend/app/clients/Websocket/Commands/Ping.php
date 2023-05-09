@@ -12,7 +12,7 @@ class Ping extends Base
         if ($host === false || ($host == $domain && !ip2long($domain))) {
             return $this->end();
         }
-        $this->client->send("{$this->commandIndex}|1|{$host}|{$this->ticket}");
+        $this->client->send("{$this->commandIndex}|1|{$domain}|{$this->ticket}");
 
         $total = 10;
         $process = new \Process('/bin/ping', ['-O', '-c 10', $host]);

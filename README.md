@@ -44,6 +44,8 @@ docker run -d --name looking-glass --restart always --network host wikihostinc/l
 ## Thanks to
 https://github.com/librespeed/speedtest
 
+https://www.jetbrains.com/
+
 ## License
 
 Code is licensed under MIT Public License.
