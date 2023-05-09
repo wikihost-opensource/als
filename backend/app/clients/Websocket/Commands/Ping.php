@@ -31,9 +31,9 @@ class Ping extends Base
 
             preg_match_all('/icmp_seq=(\d+) ttl=(\d+) time=(\d+.\d+) ms/m', $content, $matches, PREG_SET_ORDER, 0);
             if (empty($matches)) {
-                $this->send("1|{$domain}|-1");
+                $this->send("1|{$host}|-1");
             } else {
-                $this->send("1|{$domain}|{$matches[0][1]}|{$matches[0][2]}|{$matches[0][3]}");
+                $this->send("1|{$host}|{$matches[0][1]}|{$matches[0][2]}|{$matches[0][3]}");
             }
         }
 
