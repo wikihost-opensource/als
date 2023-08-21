@@ -47,3 +47,6 @@ install_as_fakebin(){
 
 install_from_github "sjlleo" "nexttrace" "/tmp/nexttrace" `fix_arch`
 install_as_fakebin "/tmp/nexttrace" "true"
+
+install_from_github "nxtrace" "nali" "/tmp/nali" `fix_arch`
+install_as_fakebin "/tmp/nali" "false"
