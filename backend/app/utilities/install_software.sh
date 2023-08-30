@@ -45,5 +45,5 @@ install_as_fakebin(){
     chmod +x /mnt/fakebin/$NAME
 }
 
-install_from_github "sjlleo" "nexttrace" "/tmp/nexttrace" `fix_arch`
+install_from_github "nxtrace" "Ntrace-V1" "/tmp/nexttrace" `fix_arch`
 install_as_fakebin "/tmp/nexttrace" "true"
