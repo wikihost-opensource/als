@@ -14,7 +14,7 @@ echo "Current session enable following command(s):"
 echo " - ping"
 echo " - traceroute"
 echo " - mtr"
-echo " - nexttrace ( https://github.com/sjlleo/nexttrace )"
+echo " - nexttrace ( https://github.com/nxtrace/Ntrace-V1 )"
 echo ""
 echo "Kindly notice: Be nice, don't be evil."
 
