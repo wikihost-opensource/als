@@ -8,10 +8,32 @@ class Ping extends Base
     {
 
         $domain = array_shift($args);
-        $host = gethostbyname($domain);
-        if ($host === false || ($host == $domain && !ip2long($domain))) {
-            return $this->end();
+        $ipv6Only = false;
+
+        if (filter_var($domain, FILTER_VALIDATE_IP)) {
+            $host = $domain;
+        } elseif ($ipv6Only) {
+            $records = dns_get_record($domain, DNS_AAAA);
+            if ($records && isset($records[0]['ipv6'])) {
+                $host = $records[0]['ipv6'];
+            } else {
+                return $this->end();
+            }
+        } else {
+            $records = dns_get_record($domain, DNS_A);
+            if ($records && isset($records[0]['ip'])) {
+                $host = $records[0]['ip'];
+            } else {
+                $records = dns_get_record($domain, DNS_AAAA);
+                if ($records && isset($records[0]['ipv6'])) {
+                    $host = $records[0]['ipv6'];
+                } else {
+                    return $this->end();
+                }
+            }
         }
+        
+
         $this->client->send("{$this->commandIndex}|1|{$domain}|{$this->ticket}");
 
         $total = 10;
