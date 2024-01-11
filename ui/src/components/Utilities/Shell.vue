@@ -1,54 +1,77 @@
-<template>
-  <div class="shell">
-    <iframe v-if="load" :src="url"></iframe>
-  </div>
-  <n-collapse-transition :show="!load">
-    <n-alert :show-icon="false" :bordered="false"> Loading...</n-alert>
-  </n-collapse-transition>
-</template>
+<script setup>
+import 'xterm/css/xterm.css'
+import { Terminal } from 'xterm'
+import { FitAddon } from '@xterm/addon-fit'
+import { onUnmounted } from 'vue'
+import { useAppStore } from '@/stores/app'
+const terminal = new Terminal()
+const terminalRef = ref()
+const fitAddon = new FitAddon()
+let websocket
+let buffer = []
 
-<script>
-import { defineComponent, defineAsyncComponent } from "vue";
-export default defineComponent({
-  data() {
-    return {
-      load: false,
-      url: undefined,
-    };
-  },
-  props: {
-    wsMessage: Array,
-    ws: WebSocket,
-    componentConfig: Object,
-  },
-  mounted() {
-    let DataWatcher = this.$watch(
-      () => this.wsMessage,
-      () => {
-        this.wsMessage.forEach((e, i) => {
-          if (e[0] != 6) return;
-          if (e[1] != 1) return;
-          this.url = "./shell/?arg=" + e[2];
-          this.load = true;
-          this.wsMessage.splice(i, 1);
-          DataWatcher();
-        });
-      },
-      { immediate: true, deep: true }
-    );
-    this.ws.send(6);
-  },
-});
-</script>
-
-<style scoped>
-.shell {
-  height: inherit;
+const flushToTerminal = () => {
+  if (buffer.length > 0) {
+    terminal.write(new Uint8Array(buffer.shift()), () => {
+      flushToTerminal()
+    })
+  }
 }
 
-.shell iframe {
-  border: 0;
-  width: 100%;
-  height: 100%;
+const updateWindowSize = () => {
+  fitAddon.fit()
+  websocket.send(new TextEncoder().encode('2' + terminal.rows + ';' + terminal.cols))
+}
+
+let resizeTimer
+const handleResize = () => {
+  clearTimeout(resizeTimer)
+  resizeTimer = setTimeout(() => {
+    updateWindowSize()
+  }, 100)
+}
+
+onMounted(() => {
+  terminal.loadAddon(fitAddon)
+  terminal.open(toRaw(terminalRef.value))
+  fitAddon.fit()
+  const url = new URL(location.href)
+  const protocol = url.protocol == 'http:' ? 'ws:' : 'wss:'
+  websocket = new WebSocket(
+    protocol + '//' + url.host + '/session/' + useAppStore().sessionId + '/shell'
+  )
+  websocket.binaryType = 'arraybuffer'
+  websocket.addEventListener('message', (event) => {
+    buffer.push(event.data)
+    flushToTerminal()
+  })
+
+  websocket.addEventListener('open', (event) => {
+    window.addEventListener('resize', handleResize)
+
+    handleResize()
+    setTimeout(handleResize, 1000)
+  })
+
+  terminal.onData((data) => {
+    websocket.send(new TextEncoder().encode('1' + data))
+  })
+  fitAddon.fit()
+})
+
+onUnmounted(() => {
+  if (websocket) {
+    websocket.close()
+  }
+})
+</script>
+
+<template>
+  <div ref="terminalRef" class="terminal" style="flex-grow: 1; height: 100%" />
+</template>
+
+<style>
+div:has(> div.terminal) {
+  padding: 0px 0px !important;
 }
 </style>
