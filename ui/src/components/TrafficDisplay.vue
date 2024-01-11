@@ -1,10 +1,11 @@
 <script setup>
 import { useAppStore } from '@/stores/app'
-import { onUnmounted } from 'vue'
+import { onUnmounted, toRaw } from 'vue'
 import { formatBytes } from '@/helper/unit'
+import VueApexCharts from 'vue3-apexcharts'
+
 const appStore = useAppStore()
 const interfaces = ref({})
-
 const handleCache = (e) => {
   const data = JSON.parse(e.data)
   for (var ifaceIndex in data) {
@@ -17,7 +18,7 @@ const handleCache = (e) => {
     for (var point of data[ifaceIndex].Caches) {
       localIface.receive = point[1]
       localIface.send = point[2]
-      updateSerieByInterface(localIface, new Date(point[0] * 1000))
+      updateSerieByInterface(ifaceName, localIface, new Date(point[0] * 1000))
     }
   }
 }
@@ -34,15 +35,20 @@ const handleTrafficUpdate = (e) => {
   let iface = interfaces.value[ifaceName]
   iface.receive = data[2]
   iface.send = data[3]
-  updateSerieByInterface(iface, new Date(time * 1000))
+  updateSerieByInterface(ifaceName, iface, new Date(time * 1000))
 }
 
 const createGraph = (interfaceName) => {
+  const theRef = ref()
   interfaces.value[interfaceName] = {
+    ref: null,
+    theCompoent: null,
     traffic: {
       receive: null,
       send: null
     },
+    lines: [[], []],
+    categories: [],
     receive: 0,
     send: 0,
     lastReceive: 0,
@@ -113,10 +119,18 @@ const createGraph = (interfaceName) => {
       }
     ]
   }
+  interfaces.value[interfaceName].theCompoent = () =>
+    h(VueApexCharts, {
+      ref: theRef,
+      type: 'area',
+      options: interfaces.value[interfaceName].chartOptions,
+      series: interfaces.value[interfaceName].series
+    })
+  interfaces.value[interfaceName].ref = theRef
   return
 }
 
-const updateSerieByInterface = (iface, date = null, pointname = null) => {
+const updateSerieByInterface = (interfaceName, iface, date = null, pointname = null) => {
   let nowPointName
   if (date === null) {
     date = new Date()
@@ -133,9 +147,9 @@ const updateSerieByInterface = (iface, date = null, pointname = null) => {
       date.getSeconds().toString().padStart(2, '0')
   }
 
-  let categories = iface.chartOptions.xaxis.categories
-  let receiveDatas = iface.series[0].data
-  let sendDatas = iface.series[1].data
+  let categories = iface.categories
+  let receiveDatas = iface.lines[0]
+  let sendDatas = iface.lines[1]
 
   if (iface.lastReceive == 0) {
     iface.lastReceive = iface.receive
@@ -155,13 +169,31 @@ const updateSerieByInterface = (iface, date = null, pointname = null) => {
   sendDatas.push(send)
 
   categories.push(nowPointName)
-  receiveDatas = receiveDatas.slice(-20)
-  sendDatas = sendDatas.slice(-20)
-  categories = categories.slice(-20)
-
-  iface.chartOptions.value = {
-    xaxis: { categories: categories }
+  if (receiveDatas.length > 30) {
+    interfaces.value[interfaceName].categories = categories.slice(-10)
+    interfaces.value[interfaceName].lines[0] = receiveDatas.slice(-10)
+    interfaces.value[interfaceName].lines[1] = sendDatas.slice(-10)
   }
+  categories = categories.slice(0)
+  receiveDatas = receiveDatas.slice(0)
+  sendDatas = sendDatas.slice(0)
+  if (!iface.ref) return
+  iface.ref.updateOptions({
+    xaxis: {
+      categories: toRaw(categories)
+    }
+  })
+
+  iface.ref.updateSeries([
+    {
+      name: 'Receive',
+      data: toRaw(receiveDatas)
+    },
+    {
+      name: 'Send',
+      data: toRaw(sendDatas)
+    }
+  ])
 }
 onMounted(() => {
   appStore.source.addEventListener('InterfaceCache', handleCache)
@@ -196,12 +228,7 @@ onUnmounted(() => {
               </span>
             </n-gi>
             <n-gi span="2">
-              <apexchart
-                type="area"
-                :options="interfaceData.chartOptions"
-                :series="interfaceData.series"
-              >
-              </apexchart>
+              <component :is="interfaceData.theCompoent" />
             </n-gi>
           </n-grid>
         </n-card>
