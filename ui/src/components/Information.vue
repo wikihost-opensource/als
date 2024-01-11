@@ -1,6 +1,8 @@
 <script setup>
 import { useAppStore } from '@/stores/app'
 import Copyable from './Copy.vue'
+import Markdown from 'vue3-markdown-it'
+
 const appStore = useAppStore()
 const configKeyMap = {
   location: '服务器位置',
@@ -25,5 +27,11 @@ const configKeyMap = {
         </template>
       </template>
     </n-grid>
+  </n-card>
+  <n-card v-if="appStore.config.sponsor_message.length > 0" hoverable style="margin-top: 10px">
+    <template #header> 节点赞助商消息 </template>
+    <div class="sponsor">
+      <Markdown :source="appStore.config.sponsor_message" />
+    </div>
   </n-card>
 </template>

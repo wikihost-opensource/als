@@ -9,11 +9,12 @@ import (
 
 func LoadFromEnv() {
 	envVarsString := map[string]*string{
-		"LISTEN_IP":   &Config.ListenHost,
-		"HTTP_PORT":   &Config.ListenPort,
-		"LOCATION":    &Config.Location,
-		"PUBLIC_IPV4": &Config.PublicIPv4,
-		"PUBLIC_IPV6": &Config.PublicIPv6,
+		"LISTEN_IP":       &Config.ListenHost,
+		"HTTP_PORT":       &Config.ListenPort,
+		"LOCATION":        &Config.Location,
+		"PUBLIC_IPV4":     &Config.PublicIPv4,
+		"PUBLIC_IPV6":     &Config.PublicIPv6,
+		"SPONSOR_MESSAGE": &Config.SponsorMessage,
 	}
 
 	envVarsInt := map[string]*int{

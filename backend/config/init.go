@@ -1,7 +1,10 @@
 package config
 
 import (
+	"io"
 	"log"
+	"net/http"
+	"os"
 )
 
 var Config *ALSConfig
@@ -70,4 +73,31 @@ func LoadWebConfig() {
 	if Config.PublicIPv4 == "" && Config.PublicIPv6 == "" {
 		go updatePublicIP()
 	}
+}
+
+func LoadSponsorMessage() {
+	if Config.SponsorMessage == "" {
+		return
+	}
+
+	log.Default().Println("Loading sponser message...")
+
+	if _, err := os.Stat(Config.SponsorMessage); err == nil {
+		content, err := os.ReadFile(Config.SponsorMessage)
+		if err == nil {
+			Config.SponsorMessage = string(content)
+			return
+		}
+	}
+
+	resp, err := http.Get(Config.SponsorMessage)
+	if err == nil {
+		content, err := io.ReadAll(resp.Body)
+		if err == nil {
+			Config.SponsorMessage = string(content)
+			return
+		}
+	}
+
+	log.Default().Panicln("Failed to load sponsor message.")
 }
