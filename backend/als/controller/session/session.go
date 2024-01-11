@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"github.com/samlm0/als/v2/als/client"
 	"github.com/samlm0/als/v2/als/timer"
 	"github.com/samlm0/als/v2/config"
@@ -16,8 +17,8 @@ type sessionConfig struct {
 }
 
 func Handle(c *gin.Context) {
-	// uuid := uuid.New().String()
-	uuid := "1"
+	uuid := uuid.New().String()
+	// uuid := "1"
 	channel := make(chan *client.Message)
 	clientSession := &client.ClientSession{Channel: channel}
 	client.Clients[uuid] = clientSession
