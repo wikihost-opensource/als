@@ -109,6 +109,8 @@ github.com/sagikazarmark/slog-shim v0.1.0 h1:diDBnUNK9N/354PgrxMywXnAwEr1QZcOr6g
 github.com/sagikazarmark/slog-shim v0.1.0/go.mod h1:SrcSrq8aKtyuqEI1uvTDTK1arOWRIczQRv+GVI1AkeQ=
 github.com/samlm0/go-ping v0.0.0-20240106230605-281e8c49af04 h1:2imMn+wiM9t0+4ClY3l7m/NIM0yXBx+ZzkvX9kCUdls=
 github.com/samlm0/go-ping v0.0.0-20240106230605-281e8c49af04/go.mod h1:3cg9EBJvzQ1vZZmTu0E/AQtagyHE7TEs4zXslwFPXLc=
+github.com/samlm0/go-ping v0.1.0 h1:ajEqnaEtP2HY9vldc38J2Y2Qve8j+E3jkgwKK+LIoWM=
+github.com/samlm0/go-ping v0.1.0/go.mod h1:3cg9EBJvzQ1vZZmTu0E/AQtagyHE7TEs4zXslwFPXLc=
 github.com/sourcegraph/conc v0.3.0 h1:OQTbbt6P72L20UqAkXXuLOj79LfEanQ+YQFNpLA9ySo=
 github.com/sourcegraph/conc v0.3.0/go.mod h1:Sdozi7LEKbFPqYX2/J+iBAM6HpqSLTASQIKqDmF7Mt0=
 github.com/spf13/afero v1.11.0 h1:WJQKhtpdm3v2IzqG8VMqrr6Rf3UYpEF239Jy9wNepM8=
