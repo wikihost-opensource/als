@@ -12,3 +12,4 @@ backend/app/webspaces/assets
 backend/app/webspaces/index.html
 backend/app/webspaces/favicon.ico
 backend/app/utilities/speedtest
+backend/go.work
