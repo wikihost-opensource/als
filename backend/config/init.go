@@ -39,7 +39,7 @@ type ALSConfig struct {
 func GetDefaultConfig() *ALSConfig {
 	defaultConfig := &ALSConfig{
 		ListenHost:      "0.0.0.0",
-		ListenPort:      "8080",
+		ListenPort:      "80",
 		Location:        "未设置",
 		Iperf3StartPort: 20000,
 		Iperf3EndPort:   30000,
