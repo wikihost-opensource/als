@@ -40,7 +40,7 @@ func SetupHttpRoute(e *gin.Engine) {
 		}
 	}
 
-	speedtestRoute := session.Group("/speedtest")
+	speedtestRoute := session.Group("/speedtest", controller.MiddlewareSessionOnUrl())
 	{
 		if config.Config.FeatureFileSpeedtest {
 			speedtestRoute.GET("/file/:filename", speedtest.HandleFakeFile)
