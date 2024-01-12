@@ -78,6 +78,6 @@ onUnmounted(() => {
 
 <style>
 div:has(> div.terminal) {
-  padding: 0px 0px !important;
+  padding: 0px !important;
 }
 </style>

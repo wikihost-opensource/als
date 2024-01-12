@@ -5,9 +5,9 @@ import { Clipboard } from 'v-clipboard'
 import { useMessage } from 'naive-ui'
 
 const props = defineProps({
-  value: 'String',
-  text: 'Boolean',
-  hideMessage: 'Boolean'
+  value: String,
+  text: Boolean,
+  hideMessage: Boolean
 })
 const isClicked = ref(false)
 const message = useMessage()
