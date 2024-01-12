@@ -19,7 +19,7 @@ func updatePublicIP() {
 		if err == nil {
 			Config.PublicIPv4 = addr
 			log.Printf("Public IPv4 address: %s\n", addr)
-			fmt.Println(Config)
+			// fmt.Println(Config)
 			return
 		}
 
