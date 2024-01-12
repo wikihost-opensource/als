@@ -7,6 +7,7 @@ import { useAppStore } from '@/stores/app'
 const terminal = new Terminal()
 const terminalRef = ref()
 const fitAddon = new FitAddon()
+const emit = defineEmits(['closed'])
 let websocket
 let buffer = []
 
@@ -51,6 +52,11 @@ onMounted(() => {
 
     handleResize()
     setTimeout(handleResize, 1000)
+  })
+
+  websocket.addEventListener('close', (event) => {
+    console.log(event)
+    emit('closed')
   })
 
   terminal.onData((data) => {
