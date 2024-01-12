@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/exec"
 )
 
 var Config *ALSConfig
@@ -70,6 +71,13 @@ func Load() {
 func LoadWebConfig() {
 	Load()
 	log.Default().Println("Loading config for web services...")
+
+	_, err := exec.LookPath("iperf3")
+	if err != nil {
+		log.Default().Println("WARN: Disable iperf3 due to not found")
+		Config.FeatureIperf3 = false
+	}
+
 	if Config.PublicIPv4 == "" && Config.PublicIPv6 == "" {
 		go updatePublicIP()
 	}
