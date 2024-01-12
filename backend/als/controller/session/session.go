@@ -44,14 +44,19 @@ func Handle(c *gin.Context) {
 	c.Writer.Flush()
 
 	for {
-		msg, ok := <-channel
-		if !ok {
-			break
+		select {
+		case <-ctx.Done():
+			goto FINISH
+		case msg, ok := <-channel:
+			if !ok {
+				break
+			}
+			c.SSEvent(msg.Name, msg.Content)
+			c.Writer.Flush()
 		}
-		c.SSEvent(msg.Name, msg.Content)
-		c.Writer.Flush()
 	}
 
+FINISH:
 	close(channel)
 	delete(client.Clients, uuid)
 }
