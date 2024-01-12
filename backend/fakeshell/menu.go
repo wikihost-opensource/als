@@ -1,6 +1,9 @@
 package fakeshell
 
 import (
+	"fmt"
+	"os/exec"
+
 	"github.com/reeflective/console"
 	"github.com/samlm0/als/v2/config"
 	"github.com/samlm0/als/v2/fakeshell/commands"
@@ -8,6 +11,7 @@ import (
 )
 
 func defineMenuCommands(a *console.Console) console.Commands {
+	showedIsFirstTime := false
 	return func() *cobra.Command {
 		rootCmd := &cobra.Command{}
 
@@ -22,10 +26,23 @@ func defineMenuCommands(a *console.Console) console.Commands {
 			"mtr":        config.Config.FeatureMTR,
 		}
 
+		hasNotFound := false
 		for command, feature := range features {
 			if feature {
+				_, err := exec.LookPath(command)
+				if err != nil {
+					if !showedIsFirstTime {
+						fmt.Println("Error: " + command + " is not install")
+					}
+					hasNotFound = true
+					continue
+				}
 				commands.AddExecureableAsCommand(rootCmd, command)
 			}
+		}
+
+		if hasNotFound {
+			showedIsFirstTime = true
 		}
 
 		rootCmd.SetHelpCommand(&cobra.Command{
