@@ -23,15 +23,20 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
 RUN go build -o als && \
     chmod +x als
 
-FROM alpine:3
-LABEL maintainer="samlm0 <update@ifdream.net>"
-
+FROM alpine:3 as builderEnv
+ADD scripts /app
+RUN sh /app/install-software.sh
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories && \
     apk add --no-cache \
     iperf iperf3 \
     mtr \
     traceroute \
     iputils
+RUN rm -rf /app
+
+FROM alpine:3
+LABEL maintainer="samlm0 <update@ifdream.net>"
+COPY --from=builderEnv / /
 COPY --from=builderGolang --chmod=777 /app/als/als /bin/als
 
 CMD /bin/als

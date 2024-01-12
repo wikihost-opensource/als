@@ -18,6 +18,7 @@ func defineMenuCommands(a *console.Console) console.Commands {
 		features := map[string]bool{
 			"ping":       config.Config.FeaturePing,
 			"traceroute": config.Config.FeatureTraceroute,
+			"nexttrace":  config.Config.FeatureTraceroute,
 			"mtr":        config.Config.FeatureMTR,
 		}
 
