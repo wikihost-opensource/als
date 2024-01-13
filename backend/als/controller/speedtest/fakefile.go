@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/samlm0/als/v2/als/client"
 	"github.com/samlm0/als/v2/config"
 )
 
@@ -58,7 +59,7 @@ func HandleFakeFile(c *gin.Context) {
 		return
 	}
 
-	waitQueue(c.Request.Context())
+	client.WaitQueue(c.Request.Context())
 
 	filename = filename[0 : len(filename)-5]
 	if !contains(config.Config.SpeedtestFileList, filename) {

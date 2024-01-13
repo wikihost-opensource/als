@@ -1,4 +1,4 @@
-package speedtest
+package client
 
 import (
 	"context"
@@ -10,7 +10,7 @@ var queueLock = sync.Mutex{}
 var hasQueueWorker = false
 var queueStop = make(chan struct{})
 
-func waitQueue(ctx context.Context) {
+func WaitQueue(ctx context.Context) {
 
 	queueCtx, cancel := context.WithCancel(ctx)
 	queueLine[ctx] = cancel
