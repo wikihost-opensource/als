@@ -13,8 +13,8 @@ export const useAppStore = defineStore('app', () => {
 
   const handleResize = () => {
     let width = window.innerWidth
-    if (width > 650) {
-      drawerWidth.value = 650
+    if (width > 800) {
+      drawerWidth.value = 800
     } else {
       drawerWidth.value = width
     }
@@ -34,6 +34,7 @@ export const useAppStore = defineStore('app', () => {
     const eventSource = new EventSource('./session')
     eventSource.addEventListener('SessionId', (e) => {
       sessionId.value = e.data
+      console.log('session', e.data)
     })
 
     eventSource.addEventListener('Config', (e) => {
@@ -58,7 +59,7 @@ export const useAppStore = defineStore('app', () => {
 
   const requestMethod = (method, data = {}, signal = null) => {
     let axiosConfig = {
-      timeout: 1000 * 30, // 请求超时时间
+      timeout: 1000 * 120, // 请求超时时间
       headers: {
         session: sessionId.value
       }

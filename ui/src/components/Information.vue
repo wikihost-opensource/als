@@ -35,3 +35,10 @@ const configKeyMap = {
     </div>
   </n-card>
 </template>
+
+<style>
+.sponsor a {
+  color: #70c0e8;
+  text-decoration: none;
+}
+</style>

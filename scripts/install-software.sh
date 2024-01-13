@@ -30,3 +30,5 @@ install_from_github(){
 
 install_from_github "nxtrace" "Ntrace-V1" "/usr/local/bin/nexttrace" `fix_arch`
 chmod +x "/usr/local/bin/nexttrace"
+
+sh install-speedtest.sh

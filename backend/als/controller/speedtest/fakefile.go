@@ -59,7 +59,7 @@ func HandleFakeFile(c *gin.Context) {
 		return
 	}
 
-	client.WaitQueue(c.Request.Context())
+	client.WaitQueue(c.Request.Context(), nil)
 
 	filename = filename[0 : len(filename)-5]
 	if !contains(config.Config.SpeedtestFileList, filename) {

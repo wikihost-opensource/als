@@ -23,6 +23,7 @@ func defineMenuCommands(a *console.Console) console.Commands {
 			"ping":       config.Config.FeaturePing,
 			"traceroute": config.Config.FeatureTraceroute,
 			"nexttrace":  config.Config.FeatureTraceroute,
+			"speedtest":  config.Config.FeatureSpeedtestDotNet,
 			"mtr":        config.Config.FeatureMTR,
 		}
 

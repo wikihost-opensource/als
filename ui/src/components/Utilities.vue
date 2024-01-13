@@ -25,6 +25,12 @@ const tools = ref([
     componentNode: _v(() => import('./Utilities/IPerf3.vue'))
   },
   {
+    label: 'Speedtest.net',
+    show: false,
+    enable: false,
+    componentNode: _v(() => import('./Utilities/SpeedtestNet.vue'))
+  },
+  {
     label: 'Shell',
     show: false,
     enable: false,
@@ -34,7 +40,7 @@ const tools = ref([
 
 onMounted(() => {
   for (var tool of tools.value) {
-    const configKey = 'feature_' + tool.label.toLowerCase()
+    const configKey = 'feature_' + tool.label.toLowerCase().replace('.', '_dot_')
     console.log(configKey, config.value[configKey])
     tool.enable = config.value[configKey] ?? false
   }

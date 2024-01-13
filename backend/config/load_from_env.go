@@ -23,12 +23,13 @@ func LoadFromEnv() {
 	}
 
 	envVarsBool := map[string]*bool{
-		"DISPLAY_TRAFFIC":     &Config.FeatureIfaceTraffic,
-		"ENABLE_SPEEDTEST":    &Config.FeatureLibrespeed,
-		"UTILITIES_PING":      &Config.FeaturePing,
-		"UTILITIES_FAKESHELL": &Config.FeatureShell,
-		"UTILITIES_IPERF3":    &Config.FeatureIperf3,
-		"UTILITIES_MTR":       &Config.FeatureMTR,
+		"DISPLAY_TRAFFIC":           &Config.FeatureIfaceTraffic,
+		"ENABLE_SPEEDTEST":          &Config.FeatureLibrespeed,
+		"UTILITIES_SPEEDTESTDOTNET": &Config.FeatureSpeedtestDotNet,
+		"UTILITIES_PING":            &Config.FeaturePing,
+		"UTILITIES_FAKESHELL":       &Config.FeatureShell,
+		"UTILITIES_IPERF3":          &Config.FeatureIperf3,
+		"UTILITIES_MTR":             &Config.FeatureMTR,
 	}
 
 	for envVar, configField := range envVarsString {

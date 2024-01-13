@@ -10,11 +10,11 @@ import (
 
 func UpdateSystemResource() {
 	var m runtime.MemStats
-	ticker := time.NewTicker(1 * time.Second)
+	ticker := time.NewTicker(5 * time.Second)
 	for {
 		<-ticker.C
 		runtime.ReadMemStats(&m)
-		client.BroadCastMessage("MemoryUsage", strconv.Itoa(int(m.Alloc)))
+		client.BroadCastMessage("MemoryUsage", strconv.Itoa(int(m.Sys)))
 	}
 
 }

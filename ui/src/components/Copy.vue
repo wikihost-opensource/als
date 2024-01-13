@@ -12,7 +12,16 @@ const props = defineProps({
 const isClicked = ref(false)
 const message = useMessage()
 const copy = async (value) => {
-  await navigator.clipboard.writeText(value)
+  try {
+    await navigator.clipboard.writeText(value)
+  } catch (error) {
+    const textarea = document.createElement('textarea')
+    document.body.appendChild(textarea)
+    textarea.textContent = value
+    textarea.select()
+    document?.execCommand('copy')
+    textarea.remove()
+  }
   isClicked.value = true
   if (!props['hideMessage']) {
     message.info('已复制到剪贴板')

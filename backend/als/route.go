@@ -28,6 +28,10 @@ func SetupHttpRoute(e *gin.Engine) {
 			v1.GET("/ping", ping.Handle)
 		}
 
+		if config.Config.FeatureSpeedtestDotNet {
+			v1.GET("/speedtest_dot_net", speedtest.HandleSpeedtestDotNet)
+		}
+
 		if config.Config.FeatureIfaceTraffic {
 			v1.GET("/cache/interfaces", cache.UpdateInterfaceCache)
 		}

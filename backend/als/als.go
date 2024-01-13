@@ -3,6 +3,7 @@ package als
 import (
 	"log"
 
+	"github.com/samlm0/als/v2/als/client"
 	"github.com/samlm0/als/v2/als/timer"
 	"github.com/samlm0/als/v2/config"
 	alsHttp "github.com/samlm0/als/v2/http"
@@ -20,5 +21,6 @@ func Init() {
 		go timer.SetupInterfaceBroadcast()
 	}
 	go timer.UpdateSystemResource()
+	go client.HandleQueue()
 	aHttp.Start()
 }

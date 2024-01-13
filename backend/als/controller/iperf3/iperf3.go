@@ -37,7 +37,6 @@ func Handle(c *gin.Context) {
 
 	writer := func(pipe io.ReadCloser, err error) {
 		if err != nil {
-			fmt.Println("Pipe closed", err)
 			return
 		}
 		for {
@@ -68,11 +67,6 @@ func Handle(c *gin.Context) {
 	}
 
 	cmd.Wait()
-	// err = cmd.Wait()
-	// if err != nil {
-	// 处理错误
-	// fmt.Println("Error waiting for command:", err)
-	// }
 
 	c.JSON(200, &gin.H{
 		"success": true,

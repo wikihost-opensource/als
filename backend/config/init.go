@@ -27,14 +27,15 @@ type ALSConfig struct {
 
 	SponsorMessage string `json:"sponsor_message"`
 
-	FeaturePing          bool `json:"feature_ping"`
-	FeatureShell         bool `json:"feature_shell"`
-	FeatureLibrespeed    bool `json:"feature_librespeed"`
-	FeatureFileSpeedtest bool `json:"feature_filespeedtest"`
-	FeatureIperf3        bool `json:"feature_iperf3"`
-	FeatureMTR           bool `json:"feature_mtr"`
-	FeatureTraceroute    bool `json:"feature_traceroute"`
-	FeatureIfaceTraffic  bool `json:"feature_iface_traffic"`
+	FeaturePing            bool `json:"feature_ping"`
+	FeatureShell           bool `json:"feature_shell"`
+	FeatureLibrespeed      bool `json:"feature_librespeed"`
+	FeatureFileSpeedtest   bool `json:"feature_filespeedtest"`
+	FeatureSpeedtestDotNet bool `json:"feature_speedtest_dot_net"`
+	FeatureIperf3          bool `json:"feature_iperf3"`
+	FeatureMTR             bool `json:"feature_mtr"`
+	FeatureTraceroute      bool `json:"feature_traceroute"`
+	FeatureIfaceTraffic    bool `json:"feature_iface_traffic"`
 }
 
 func GetDefaultConfig() *ALSConfig {
@@ -49,14 +50,15 @@ func GetDefaultConfig() *ALSConfig {
 		PublicIPv4:        "",
 		PublicIPv6:        "",
 
-		FeaturePing:          true,
-		FeatureShell:         true,
-		FeatureLibrespeed:    true,
-		FeatureFileSpeedtest: true,
-		FeatureIperf3:        true,
-		FeatureMTR:           true,
-		FeatureTraceroute:    true,
-		FeatureIfaceTraffic:  true,
+		FeaturePing:            true,
+		FeatureShell:           true,
+		FeatureLibrespeed:      true,
+		FeatureFileSpeedtest:   true,
+		FeatureSpeedtestDotNet: true,
+		FeatureIperf3:          true,
+		FeatureMTR:             true,
+		FeatureTraceroute:      true,
+		FeatureIfaceTraffic:    true,
 	}
 
 	return defaultConfig
@@ -70,6 +72,7 @@ func Load() {
 
 func LoadWebConfig() {
 	Load()
+	LoadSponsorMessage()
 	log.Default().Println("Loading config for web services...")
 
 	_, err := exec.LookPath("iperf3")
@@ -102,10 +105,11 @@ func LoadSponsorMessage() {
 	if err == nil {
 		content, err := io.ReadAll(resp.Body)
 		if err == nil {
+			log.Default().Println("Loaded sponser message from url.")
 			Config.SponsorMessage = string(content)
 			return
 		}
 	}
 
-	log.Default().Panicln("Failed to load sponsor message.")
+	log.Default().Println("ERROR: Failed to load sponsor message.")
 }
