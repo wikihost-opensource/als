@@ -21,6 +21,7 @@ RUN go build -o als && \
     chmod +x als
 
 FROM alpine:3 as builderEnv
+WORKDIR /app
 ADD scripts /app
 RUN sh /app/install-software.sh
 RUN apk add --no-cache \
