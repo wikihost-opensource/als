@@ -58,6 +58,8 @@ func HandleFakeFile(c *gin.Context) {
 		return
 	}
 
+	waitQueue(c.Request.Context())
+
 	filename = filename[0 : len(filename)-5]
 	if !contains(config.Config.SpeedtestFileList, filename) {
 		c.String(404, "404 file not found")
