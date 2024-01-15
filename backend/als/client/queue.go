@@ -8,10 +8,16 @@ import (
 var queueLine = make(map[context.Context]context.CancelFunc, 0)
 var queueLock = sync.Mutex{}
 var queueNotify = make(map[context.Context]func(), 0)
+var queueWakeup = make(chan struct{})
 
 func WaitQueue(ctx context.Context, cb func()) {
 	queueCtx, cancel := context.WithCancel(ctx)
 	queueLine[ctx] = cancel
+
+	select {
+	case queueWakeup <- struct{}{}:
+	default:
+	}
 
 	queueLock.Lock()
 	if cb != nil {
@@ -49,6 +55,7 @@ func GetQueuePostitionByCtx(ctx context.Context) (int, int) {
 
 func HandleQueue() {
 	for {
+		<-queueWakeup
 		for ctx, notify := range queueLine {
 			notify()
 			<-ctx.Done()
