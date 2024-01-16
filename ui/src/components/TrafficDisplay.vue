@@ -208,20 +208,20 @@ onUnmounted(() => {
 
 <template>
   <n-card hoverable>
-    <template #header> 服务器流量图 </template>
+    <template #header> {{ $t('server_bandwidth_graph') }} </template>
     <n-grid x-gap="12" cols="1 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen">
       <n-gi v-for="(interfaceData, interfaceName) in interfaces">
         <n-card :title="interfaceName">
           <n-grid x-gap="12" :cols="2">
             <n-gi>
-              <h3>已接收</h3>
+              <h3>{{ $t('server_bandwidth_graph_receive') }}</h3>
               <span class="traffic-display">
                 {{ formatBytes(interfaceData.traffic.receive, 2, true) }} /
                 {{ formatBytes(interfaceData.receive) }}
               </span>
             </n-gi>
             <n-gi>
-              <h3>已发送</h3>
+              <h3>{{ $t('server_bandwidth_graph_sended') }}</h3>
               <span class="traffic-display">
                 {{ formatBytes(interfaceData.traffic.send, 2, true) }} /
                 {{ formatBytes(interfaceData.send) }}

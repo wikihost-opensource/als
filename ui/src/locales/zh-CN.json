@@ -1,0 +1,21 @@
+{
+  "server_info": "服务器信息",
+  "server_location": "服务器位置",
+  "server_speedtest": "服务器网络测速",
+  "file_speedtest": "文件下载测试",
+  "file_ipv4_speedtest": "IPv4 下载测试",
+  "file_ipv6_speedtest": "IPv6 下载测试",
+  "librespeed_begin": "开始测试",
+  "librespeed_stop": "停止测试",
+  "librespeed_upload": "下行",
+  "librespeed_download": "上行",
+  "network_tools": "网络工具",
+  "server_bandwidth_graph": "服务器流量图",
+  "server_bandwidth_graph_receive": "已接收",
+  "server_bandwidth_graph_sended": "已发送",
+  "my_address": "您当前的 IP 地址",
+  "ipv4_address": "IPv4 地址",
+  "ipv6_address": "IPv6 地址",
+  "sponsor_message": "节点赞助商消息",
+  "memory_usage": "内存用量"
+}

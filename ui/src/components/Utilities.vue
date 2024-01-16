@@ -94,7 +94,7 @@ const handleDrawClosed = () => {
 
 <template>
   <n-card v-if="hasToolEnable">
-    <template #header> 网络工具 </template>
+    <template #header> {{ $t('network_tools') }} </template>
     <n-space>
       <template v-for="tool in tools">
         <n-button v-if="tool.enable" @click="tool.show = true">{{ tool.label }}</n-button>

@@ -33,6 +33,7 @@
     "unplugin-vue-components": "^0.26.0",
     "v-clipboard": "3.0.0-next.1",
     "vite": "^5.0.10",
+    "vue-i18n": "9",
     "vue3-apexcharts": "^1.4.4",
     "vue3-markdown-it": "^1.0.10",
     "xterm": "^5.3.0"

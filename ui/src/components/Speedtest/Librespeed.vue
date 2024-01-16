@@ -1,6 +1,7 @@
 <script setup>
 import { useAppStore } from '@/stores/app'
 import { onMounted, toRaw } from 'vue'
+import VueApexCharts from 'vue3-apexcharts'
 const appStore = useAppStore()
 
 let workerInstance = null
@@ -172,10 +173,10 @@ const startOrStopSpeedtest = (force = false) => {
     <n-grid x-gap="12" cols="1 s:1 m:1 l:2" responsive="screen">
       <n-gi span="1">
         <div>
-          <h4>下行</h4>
+          <h4>{{ $t('librespeed_download') }}</h4>
           <h1>{{ downloadText }} Mbps</h1>
         </div>
-        <apexchart
+        <VueApexCharts
           type="area"
           ref="chartDownloadRef"
           :options="charts.download.options"
@@ -185,10 +186,10 @@ const startOrStopSpeedtest = (force = false) => {
       </n-gi>
       <n-gi span="1">
         <div>
-          <h4>上行</h4>
+          <h4>{{ $t('librespeed_upload') }}</h4>
           <h1>{{ uploadText }} Mbps</h1>
         </div>
-        <apexchart
+        <VueApexCharts
           type="area"
           ref="chartUploadRef"
           :options="charts.upload.options"
@@ -201,9 +202,9 @@ const startOrStopSpeedtest = (force = false) => {
   <n-space justify="space-evenly">
     <n-button size="large" @click="startOrStopSpeedtest" style="margin-top: 10px">
       <template v-if="working">
-        <n-spin size="small" style="margin-right: 10px" />停止测试
+        <n-spin size="small" style="margin-right: 10px" />{{ $t('librespeed_stop') }}
       </template>
-      <template v-else>开始测试</template>
+      <template v-else>{{ $t('librespeed_begin') }}</template>
     </n-button>
   </n-space>
 </template>

@@ -1,0 +1,21 @@
+{
+  "server_info": "Server Information",
+  "server_location": "Server location",
+  "server_speedtest": "Server Network Speed Test",
+  "file_speedtest": "File Download Test",
+  "file_ipv4_speedtest": "IPv4 Download Test",
+  "file_ipv6_speedtest": "IPv6 Download Test",
+  "librespeed_begin": "Begin test",
+  "librespeed_stop": "Stop test",
+  "librespeed_upload": "Upload",
+  "librespeed_download": "Download",
+  "network_tools": "Network tools",
+  "server_bandwidth_graph": "Server bandwidth graph",
+  "server_bandwidth_graph_receive": "Received",
+  "server_bandwidth_graph_sended": "Sended",
+  "ipv4_address": "IPv4 Address",
+  "ipv6_address": "IPv6 Address",
+  "my_address": "Your current IP address",
+  "sponsor_message": "Sponsor message",
+  "memory_usage": "Memory usage"
+}
