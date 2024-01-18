@@ -1,5 +1,8 @@
 [![docker image build](https://github.com/wikihost-opensource/als/actions/workflows/docker-image.yml/badge.svg)](https://github.com/wikihost-opensource/als/actions/workflows/docker-image.yml)
 
+
+Language: English | [简体中文](README_zh_CN.md)
+
 # ALS - Another Looking-glass Server
 
 ## Quick start
@@ -9,17 +12,31 @@ docker run -d --name looking-glass --restart always --network host wikihostinc/l
 
 [DEMO](http://lg.hk1-bgp.hkg.50network.com/)
 
-## Host Requirements
- - Can run docker (yes, only docker is required)
+If you don't want to use Docker , you can use the [compiled server](https://github.com/wikihost-opensource/als/releases)
 
-## Image Environment Variables
+## Host Requirements
+ - RAM: 32MB or more
+
+## How to change config
+```
+# you need pass -e KEY=VALUE to docker command
+# you can find the KEY below the [Image Environment Variables]
+# for example, change the listen port to 8080
+docker run -d \
+    --name looking-glass \
+    -e HTTP_PORT=8080 \
+    --restart always \
+    --network host \
+    wikihostinc/looking-glass-server
+``` 
+
+## Environment variable table
 | Key                       | Example                                                                | Default                                                    | Description                                                                             |
 | ------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | LISTEN_IP                 | 127.0.0.1                                                              | (all ip)                                                   | which IP address will be listen use                                                     |
 | HTTP_PORT                 | 80                                                                     | 80                                                         | which HTTP port should use                                                              |
 | SPEEDTEST_FILE_LIST       | 100MB 1GB                                                              | 1MB 10MB 100MB 1GB                                         | size of static test files, separate with space                                          |
-| LOCATION                  | "this is location"                                                     | (from maxmind database, ip via PUBLIC_IPV4 or PUBLIC_IPV6) | location string                                                                         |
-| MAXMIND_KEY               | THE_KEY                                                                | (empty)                                                    | about more https://dev.maxmind.com/geoip/geolite2-free-geolocation-data                 |
+| LOCATION                  | "this is location"                                                     | (request from http://ipapi.co) | location string                                                                         |
 | PUBLIC_IPV4               | 1.1.1.1                                                                | (fetch from http://ifconfig.co)                            | The IPv4 address of the server                                                          |
 | PUBLIC_IPV6               | fe80::1                                                                | (fetch from http://ifconfig.co)                            | The IPv6 address of the server                                                          |
 | DISPLAY_TRAFFIC           | true                                                                   | true                                                       | Toggle the streaming traffic graph                                                      |
@@ -35,12 +52,12 @@ docker run -d --name looking-glass --restart always --network host wikihostinc/l
 
 ## Features
 - [x] HTML 5 Speed Test
-- [x] Ping - IPv4
+- [x] Ping - IPv4 / IPv6
 - [x] iPerf3 server
 - [x] Streaming traffic graph
 - [x] Speedtest.net Client
 - [x] Online shell box (limited commands)
-
+- [x] [NextTrace](https://github.com/nxtrace/NTrace-core) Support
 ## Thanks to
 https://github.com/librespeed/speedtest
 
@@ -50,4 +67,8 @@ https://www.jetbrains.com/
 
 Code is licensed under MIT Public License.
 
-* If you wish to support my efforts, keep the "Powered by LookingGlass" link intact.
+* If you wish to support my efforts, keep the "Powered by WIKIHOST Opensource - ALS" link intact.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=wikihost-opensource/als&type=Date)](https://star-history.com/#wikihost-opensource/als&Date)
