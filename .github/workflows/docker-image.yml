@@ -5,8 +5,9 @@ on:
   - cron: "0 0 */7 * *"
   workflow_dispatch:
   push:
-    branches:
-    - master
+    tags:
+      - '*'
+
 
 jobs:
   docker:
