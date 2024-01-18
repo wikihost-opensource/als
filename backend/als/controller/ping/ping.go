@@ -42,8 +42,8 @@ func Handle(c *gin.Context) {
 		}
 		channel <- msg
 	}
-
-	p.Start(clientSession.GetContext(c.Request.Context()))
+	ctx := clientSession.GetContext(c.Request.Context())
+	p.Start(ctx)
 
 	c.JSON(200, &gin.H{
 		"success": true,

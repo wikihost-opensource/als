@@ -42,9 +42,9 @@ func GetDefaultConfig() *ALSConfig {
 	defaultConfig := &ALSConfig{
 		ListenHost:      "0.0.0.0",
 		ListenPort:      "80",
-		Location:        "未设置",
-		Iperf3StartPort: 20000,
-		Iperf3EndPort:   30000,
+		Location:        "",
+		Iperf3StartPort: 30000,
+		Iperf3EndPort:   31000,
 
 		SpeedtestFileList: []string{"1MB", "10MB", "100MB", "1GB", "100GB"},
 		PublicIPv4:        "",
@@ -82,8 +82,14 @@ func LoadWebConfig() {
 	}
 
 	if Config.PublicIPv4 == "" && Config.PublicIPv6 == "" {
-		go updatePublicIP()
+		go func() {
+			updatePublicIP()
+			if Config.Location == "" {
+				updateLocation()
+			}
+		}()
 	}
+
 }
 
 func LoadSponsorMessage() {
