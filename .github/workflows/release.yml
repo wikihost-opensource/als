@@ -1,0 +1,78 @@
+name: 'Build with release'
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: git submodule update --init --recursive
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/Hydrogen'
+          cache: 'npm'
+          cache-dependency-path: 'ui'
+      - run: npm i
+        working-directory: ./ui/
+      - run: npm run build
+        working-directory: ./ui/
+      - uses: actions/upload-artifact@master
+        with:
+          name: ui
+          path: ./ui/dist
+  build-linux:
+    runs-on: ubuntu-latest
+    needs: build-ui
+    strategy:
+      matrix:
+        goos: [linux]
+        goarch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+        with:
+          go-version-file: 'backend/go.mod'
+      - uses: actions/download-artifact@master
+        with:
+          name: ui
+          path: backend/embed/ui
+      - name: Build for Linux
+        working-directory: ./backend
+        run: |
+          env GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -v -o als-${{ matrix.goos }}-${{ matrix.goarch }}
+      - uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: backend/als-${{ matrix.goos }}-${{ matrix.goarch }}
+          asset_name: als-${{ matrix.goos }}-${{ matrix.goarch }}
+          tag: ${{ github.ref }}
+  build-macos:
+    runs-on: ubuntu-latest
+    needs: build-ui
+    strategy:
+      matrix:
+        goos: [darwin]
+        goarch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+        with:
+          go-version-file: 'backend/go.mod'
+      - uses: actions/download-artifact@master
+        with:
+          name: ui
+          path: backend/embed/ui
+      - name: Build for macOS
+        working-directory: ./backend
+        run: |
+          env GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -v -o als-${{ matrix.goos }}-${{ matrix.goarch }}
+      - uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: backend/als-${{ matrix.goos }}-${{ matrix.goarch }}
+          asset_name: als-${{ matrix.goos }}-${{ matrix.goarch }}
+          tag: ${{ github.ref }}
