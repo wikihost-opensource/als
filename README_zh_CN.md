@@ -19,9 +19,9 @@ docker run -d --name looking-glass --restart always --network host wikihostinc/l
 
 ## 如何修改配置
 ```
-# you need pass -e KEY=VALUE to docker command
-# you can find the KEY below the [Image Environment Variables]
-# for example, change the listen port to 8080
+# 你需要在 docker 命令中传递环境变量设置参数: -e KEY=VALUE
+# 你可以在 环境变量表 中找到 KEY
+# 例如，将监听端口改为 8080
 docker run -d \
     --name looking-glass \
     -e HTTP_PORT=8080 \
