@@ -11,6 +11,7 @@ import path from 'node:path'
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
   return {
+    base: './',
     server: {
       proxy: {
         '/session': {
