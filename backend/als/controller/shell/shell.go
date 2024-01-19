@@ -2,6 +2,8 @@ package shell
 
 import (
 	"context"
+	"fmt"
+	"net/http"
 	"os"
 	"os/exec"
 	"strconv"
@@ -19,8 +21,10 @@ var upgrader = websocket.Upgrader{
 }
 
 func HandleNewShell(c *gin.Context) {
+	upgrader.CheckOrigin = func(r *http.Request) bool { return true }
 	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
 	defer conn.Close()

@@ -39,7 +39,7 @@ onMounted(() => {
   const url = new URL(location.href)
   const protocol = url.protocol == 'http:' ? 'ws:' : 'wss:'
   websocket = new WebSocket(
-    protocol + '//' + url.host + '/session/' + useAppStore().sessionId + '/shell'
+    protocol + '//' + url.host + url.pathname + 'session/' + useAppStore().sessionId + '/shell'
   )
   websocket.binaryType = 'arraybuffer'
   websocket.addEventListener('message', (event) => {
