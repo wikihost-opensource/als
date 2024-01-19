@@ -36,6 +36,7 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version-file: 'backend/go.mod'
+          cache-dependency-path: 'backend/go.sum'
       - uses: actions/download-artifact@master
         with:
           name: ui
@@ -62,6 +63,7 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version-file: 'backend/go.mod'
+          cache-dependency-path: 'backend/go.sum'
       - uses: actions/download-artifact@master
         with:
           name: ui
