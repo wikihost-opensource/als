@@ -1,8 +1,10 @@
 package fakeshell
 
 import (
+	"errors"
 	"fmt"
 	"os/exec"
+	"regexp"
 
 	"github.com/reeflective/console"
 	"github.com/samlm0/als/v2/config"
@@ -27,7 +29,24 @@ func defineMenuCommands(a *console.Console) console.Commands {
 			"mtr":        config.Config.FeatureMTR,
 		}
 
+		argsFilter := map[string]func([]string) ([]string, error){
+			"ping": func(args []string) ([]string, error) {
+				var re = regexp.MustCompile(`(?m)^-?f$|^-\S+f\S*$`)
+				for _, str := range args {
+					if len(re.FindAllString(str, -1)) != 0 {
+						return []string{}, errors.New("dangerous flag detected, stop running")
+					}
+				}
+				return args, nil
+			},
+		}
+
 		hasNotFound := false
+
+		argsPassthough := func(args []string) ([]string, error) {
+			return args, nil
+		}
+
 		for command, feature := range features {
 			if feature {
 				_, err := exec.LookPath(command)
@@ -38,7 +57,11 @@ func defineMenuCommands(a *console.Console) console.Commands {
 					hasNotFound = true
 					continue
 				}
-				commands.AddExecureableAsCommand(rootCmd, command)
+				filter, ok := argsFilter[command]
+				if !ok {
+					filter = argsPassthough
+				}
+				commands.AddExecureableAsCommand(rootCmd, command, filter)
 			}
 		}
 
